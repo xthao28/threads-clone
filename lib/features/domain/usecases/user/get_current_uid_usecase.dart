@@ -1,9 +1,9 @@
 import '../../repository/firebase_repository.dart';
 
-class GetCurrentUidUserCase{
+class GetCurrentUidUseCase{
   final FirebaseRepository firebaseRepository;
 
-  GetCurrentUidUserCase({required this.firebaseRepository});
+  GetCurrentUidUseCase({required this.firebaseRepository});
 
   Future<String> call(){
     return firebaseRepository.getCurrentUid();

@@ -28,7 +28,7 @@ class CredentialCubit extends Cubit<CredentialState>{
     }
   }
 
-  Future<void> signUpUser(UserEntity user) async {
+  Future<void> signUpUser({required UserEntity user}) async {
     emit(CredentialLoading());
     try{
       await signUpUserUseCase.call(user);

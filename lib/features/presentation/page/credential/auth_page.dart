@@ -1,5 +1,12 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/consts.dart';
+import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
+import 'package:threads_clone/features/presentation/cubit/auth/auth_cubit.dart';
+import 'package:threads_clone/features/presentation/cubit/credential/credential_cubit.dart';
+import 'package:threads_clone/features/presentation/page/main_screen/main_screen.dart';
 import 'dart:io';
 
 import 'widget/user_image_picker.dart';
@@ -46,7 +53,7 @@ Widget title(String text){
     return Scaffold(
       floatingActionButton: 
         InkWell(
-            onTap: (){                
+            onTap: (){               
               setState(() {
                 _isSignIn = !_isSignIn;
               });
@@ -77,226 +84,294 @@ Widget title(String text){
               ),
             ),
           ),
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(children: [   
-            sizeVer(120),         
-            Center(
-              child: Text(
-                !_isSignIn ? 'Sign Up' : 'Sign In',
-                style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold
-                ),
-              )
-            ),
-            Center(
-              child: Text(
-                !_isSignIn ? 'Customise your Threads profile' : 'Sign in to your Threads account',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color.fromRGBO(153, 153, 153, 1)
-                ),
-              )
-            ),
-            sizeVer(100), 
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: lightGreyColor,
-                  width: 2
-                ),                
-                borderRadius: BorderRadius.circular(16)
+          body: BlocConsumer<CredentialCubit, CredentialState>(
+            listener: (context, credentialSate){
+              if(credentialSate is CredentialSuccess){
+                BlocProvider.of<AuthCubit>(context).loggedIn();
+              }
+              if(credentialSate is CredentialFailure){
+                toast('Invalid Email and Password', Colors.red);
+              }
+            },
+          builder: (context, credentialState){
+            if(credentialState is CredentialSuccess){
+              return BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, authState){
+                  if(authState is Authenticated){
+                    return MainScreen(uid: authState.uid);
+                  }else{
+                    return _bodyWidget();
+                  }
+                }
+              );            
+            }else{
+              return _bodyWidget();
+            }
+          },
+        ),
+      );
+    }
+
+    _bodyWidget(){
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(children: [   
+          sizeVer(120),         
+          Center(
+            child: Text(
+              !_isSignIn ? 'Sign Up' : 'Sign In',
+              style: const TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 16,
-                  right: 16,
-                  left: 16,
-                  bottom: 0
-                ),
-                child: Form(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [  
-                      Row(                        
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                title('Email'),              
-                                Container(
-                                  margin: const EdgeInsets.only(bottom: 20),
-                                  height: 34,
-                                  child: TextFormField(
-                                    key: const ValueKey('email'),
-                                    keyboardType: TextInputType.emailAddress,
-                                    controller: _emailController,
-                                    validator: (value) {
-                                      if(value!.isEmpty || !value.contains("@")){
-                                        return 'Please enter a valid email address.';
-                                      }
-                                      return null;
-                                    },                        
-                                    decoration: const InputDecoration(                                                 
-                                      hintText: '+ Email', 
-                                      hintStyle: TextStyle(
-                                        fontSize: 12
-                                      ), 
-                                      contentPadding: EdgeInsets.only(top: -20), 
-                                      enabledBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          width: 1, 
-                                          color: lightGreyColor
-                                        )
-                                      ),
-                                      focusedBorder: UnderlineInputBorder(
-                                        borderSide: BorderSide(
-                                          width: 1, 
-                                          color: lightGreyColor
-                                        )
+            )
+          ),
+          Center(
+            child: Text(
+              !_isSignIn ? 'Customise your Threads profile' : 'Sign in to your Threads account',
+              style: const TextStyle(
+                fontSize: 12,
+                color: Color.fromRGBO(153, 153, 153, 1)
+              ),
+            )
+          ),
+          sizeVer(100), 
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: lightGreyColor,
+                width: 2
+              ),                
+              borderRadius: BorderRadius.circular(16)
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 16,
+                right: 16,
+                left: 16,
+                bottom: 0
+              ),
+              child: Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [  
+                    Row(                        
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              title('Email'),              
+                              Container(
+                                margin: const EdgeInsets.only(bottom: 20),
+                                height: 34,
+                                child: TextFormField(
+                                  key: const ValueKey('email'),
+                                  keyboardType: TextInputType.emailAddress,
+                                  controller: _emailController,
+                                  validator: (value) {
+                                    if(value!.isEmpty || !value.contains("@")){
+                                      return 'Please enter a valid email address.';
+                                    }
+                                    return null;
+                                  },                        
+                                  decoration: const InputDecoration(                                                 
+                                    hintText: '+ Email', 
+                                    hintStyle: TextStyle(
+                                      fontSize: 12
+                                    ), 
+                                    contentPadding: EdgeInsets.only(top: -20), 
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1, 
+                                        color: lightGreyColor
+                                      )
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1, 
+                                        color: lightGreyColor
                                       )
                                     )
-                                  ),
+                                  )
                                 ),
-                              ],
-                            ),
-                          ),
-                          UserImagePicker(_pickedImage)
-                        ],
-                      ), 
-                      if(!_isSignIn)                                       
-                        title('Username'),
-                      if(!_isSignIn)   
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 20),
-                          height: 34,
-                          child: TextFormField(
-                            key: const ValueKey('username'),
-                            keyboardType: TextInputType.name,
-                            controller: _usernameController,
-                            validator: (value) {
-                              if(value!.isEmpty || value.length < 4){
-                                return 'Please enter at least 4 characters.';
-                              }
-                              return null;
-                            },
-                            decoration: const InputDecoration(
-                              hintText: '+ Username',
-                              hintStyle: TextStyle(
-                                fontSize: 12
                               ),
-                              contentPadding: EdgeInsets.only(top: -20), 
-                              enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1, 
-                                    color: lightGreyColor
-                                  )
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    width: 1, 
-                                    color: lightGreyColor
-                                  )
-                                )
-                            ),
+                            ],
                           ),
                         ),
-                      title('Password'),
+                        if(!_isSignIn)
+                          UserImagePicker(_pickedImage)
+                      ],
+                    ), 
+                    if(!_isSignIn)                                       
+                      title('Username'),
+                    if(!_isSignIn)   
                       Container(
-                        height: 34,
                         margin: const EdgeInsets.only(bottom: 20),
+                        height: 34,
                         child: TextFormField(
-                          key: const ValueKey('password'),
-                          obscureText: true,
-                          controller: _passwordController,
+                          key: const ValueKey('username'),
+                          keyboardType: TextInputType.name,
+                          controller: _usernameController,
                           validator: (value) {
-                            if(value!.isEmpty || value.length < 7){
-                              return 'Password must be at least 7 characters long.';
+                            if(value!.isEmpty || value.length < 4){
+                              return 'Please enter at least 4 characters.';
                             }
                             return null;
                           },
                           decoration: const InputDecoration(
-                            hintText: '+ Password',
+                            hintText: '+ Username',
                             hintStyle: TextStyle(
                               fontSize: 12
                             ),
-                            contentPadding: EdgeInsets.only(top: -20),                             
+                            contentPadding: EdgeInsets.only(top: -20), 
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
                                   width: 1, 
                                   color: lightGreyColor
                                 )
                               ),
-                            focusedBorder: UnderlineInputBorder(
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 1, 
+                                  color: lightGreyColor
+                                )
+                              )
+                          ),
+                        ),
+                      ),
+                    title('Password'),
+                    Container(
+                      height: 34,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      child: TextFormField(
+                        key: const ValueKey('password'),
+                        obscureText: true,
+                        controller: _passwordController,
+                        validator: (value) {
+                          if(value!.isEmpty || value.length < 7){
+                            return 'Password must be at least 7 characters long.';
+                          }
+                          return null;
+                        },
+                        decoration: const InputDecoration(
+                          hintText: '+ Password',
+                          hintStyle: TextStyle(
+                            fontSize: 12
+                          ),
+                          contentPadding: EdgeInsets.only(top: -20),                             
+                          enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
                                 width: 1, 
                                 color: lightGreyColor
                               )
-                            )
-                          ),                    
-                        ),
-                      ),
-                      if(!_isSignIn)                      
-                        title('Bio'),  
-                      if(!_isSignIn)                    
-                        TextFormField(
-                          key: const ValueKey('bio'),
-                          keyboardType: TextInputType.text,
-                          controller: _bioController,
-                          validator: (value) {
-                            if(value!.isEmpty || value.length < 4){
-                              return 'Please enter at least 4 characters.';                      
-                            }
-                            return null;                    
-                          },
-                          decoration: const InputDecoration(
-                            hintText: '+ Write Bio',
-                            hintStyle: TextStyle(
-                              fontSize: 12
                             ),
-                            contentPadding: EdgeInsets.only(top: -20), 
-                            border: InputBorder.none                          
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1, 
+                              color: lightGreyColor
+                            )
+                          )
+                        ),                    
+                      ),
+                    ),
+                    if(!_isSignIn)                      
+                      title('Bio'),  
+                    if(!_isSignIn)                    
+                      TextFormField(
+                        key: const ValueKey('bio'),
+                        keyboardType: TextInputType.text,
+                        controller: _bioController,
+                        validator: (value) {
+                          if(value!.isEmpty || value.length < 4){
+                            return 'Please enter at least 4 characters.';                      
+                          }
+                          return null;                    
+                        },
+                        decoration: const InputDecoration(
+                          hintText: '+ Write Bio',
+                          hintStyle: TextStyle(
+                            fontSize: 12
                           ),
-                        ),                                                                
-                    ],
-                  ),
+                          contentPadding: EdgeInsets.only(top: -20), 
+                          border: InputBorder.none                          
+                        ),
+                      ),                                                                
+                  ],
                 ),
               ),
             ),
-            sizeVer(20),
-            InkWell(
-              onTap: (){                                
-              },
-              borderRadius: BorderRadius.circular(10),                            
-              child: Container(                                             
-                height: 48,
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.black
-                  // border: Border.all(
-                  //   color: lightGreyColor,
-                  //   width: 2
-                  // ),  
-                ), 
-                child: Center(
-                  child: Text(
-                    !_isSignIn ? 'Sign Up' : 'Sign In', 
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14
-                    ),
+          ),
+          sizeVer(20),
+          InkWell(
+            onTap:!_isSignIn ? _signUpPage : _signInPage,
+            borderRadius: BorderRadius.circular(10),                            
+            child: Container(                                             
+              height: 48,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.black
+                // border: Border.all(
+                //   color: lightGreyColor,
+                //   width: 2
+                // ),  
+              ), 
+              child: Center(
+                child: Text(
+                  !_isSignIn ? 'Sign Up' : 'Sign In', 
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14
                   ),
-                ),             
-              ),
-            ),            
-          ]
-        ),
+                ),
+              ),             
+            ),
+          ),            
+        ]
       ),
     );
+  }
+
+  Future<void> _signUpPage() async{
+    BlocProvider.of<CredentialCubit>(context).signUpUser(
+      user: UserEntity(
+        email: _emailController.text,
+        password: _passwordController.text,
+        bio: _bioController.text,
+        username: _usernameController.text,
+        totalThreads: 0,
+        totalFollowers: 0,
+        totalFollowing: 0,
+        link: '',
+        imageFile: _profileUrl,
+        name: '',
+        followers: [],
+        following: []
+      )
+    ).then((value){
+      toast('Sign Up Success', Colors.green);
+      setState(() {
+        _bioController.clear();
+        _emailController.clear();
+        _passwordController.clear();
+        _usernameController.clear();
+      });
+    });
+  }
+
+  void _signInPage(){
+    BlocProvider.of<CredentialCubit>(context).signInUser(
+      email: _emailController.text, 
+      password: _passwordController.text
+    ).then((value){
+      toast('Sign In Success', Colors.green);
+      setState(() {
+        _emailController.clear();
+        _passwordController.clear();
+      });
+    });
   }
 }

@@ -13,7 +13,7 @@ class UserEntity extends Equatable{
   final List? following;
   final num? totalFollowers;
   final num? totalFollowing;
-  final num? totalPost;
+  final num? totalThreads;
 
   final String? password;
   final File? imageFile;
@@ -31,7 +31,7 @@ class UserEntity extends Equatable{
     this.following, 
     this.totalFollowers, 
     this.totalFollowing, 
-    this.totalPost, 
+    this.totalThreads, 
     this.password, 
     this.imageFile, 
     this.otherUid
@@ -50,7 +50,7 @@ class UserEntity extends Equatable{
     following,
     totalFollowers,
     totalFollowing,
-    totalPost,
+    totalThreads,
     password,
     imageFile,
     otherUid

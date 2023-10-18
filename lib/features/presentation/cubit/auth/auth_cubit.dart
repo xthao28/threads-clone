@@ -10,19 +10,19 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   final SignOutUseCase signOutUseCase;
   final IsSignInUseCase isSignInUseCase;
-  final GetCurrentUidUserCase getCurrentUidUserCase;
+  final GetCurrentUidUseCase getCurrentUidUseCase;
 
   AuthCubit({
     required this.signOutUseCase,
     required this.isSignInUseCase,
-    required this.getCurrentUidUserCase
+    required this.getCurrentUidUseCase
   }) : super(AuthInitial());
 
   Future<void> appStarted(BuildContext buildContext) async{
     try{
       bool isSignIn = await isSignInUseCase.call();
       if(isSignIn == true){
-        final uid = await getCurrentUidUserCase.call();
+        final uid = await getCurrentUidUseCase.call();
         emit(Authenticated(uid: uid));
       }
       else{
@@ -35,7 +35,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> loggedIn() async {
     try{
-      final uid = await getCurrentUidUserCase.call();
+      final uid = await getCurrentUidUseCase.call();
       emit(Authenticated(uid: uid));
     }catch(_){
       emit(UnAuthenticated());

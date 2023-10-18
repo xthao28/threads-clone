@@ -15,7 +15,7 @@ class UserModel extends UserEntity{
   final List? following;
   final num? totalFollowers;
   final num? totalFollowing;
-  final num? totalPost;
+  final num? totalThreads;
 
   const UserModel({
     this.uid, 
@@ -29,7 +29,7 @@ class UserModel extends UserEntity{
     this.following, 
     this.totalFollowers, 
     this.totalFollowing, 
-    this.totalPost
+    this.totalThreads
   }) : super(
     uid: uid,
     username: username,
@@ -42,7 +42,7 @@ class UserModel extends UserEntity{
     following: following,
     totalFollowers: totalFollowers,
     totalFollowing: totalFollowing,
-    totalPost: totalPost
+    totalThreads: totalThreads
   );
 
   factory UserModel.fromSnapshot(DocumentSnapshot snap){
@@ -57,7 +57,7 @@ class UserModel extends UserEntity{
       profileUrl: snapshot['profileUrl'],
       totalFollowers: snapshot['totalFollowers'],
       totalFollowing: snapshot['totalFollowing'],
-      totalPost: snapshot['totalPost'],
+      totalThreads: snapshot['totalThreads'],
       followers: List.from(snap.get('followers')),
       following: List.from(snap.get('following'))
     );
@@ -73,7 +73,7 @@ class UserModel extends UserEntity{
     'profileUrl': profileUrl,
     'totalFollowers': totalFollowers,
     'totalFollowing': totalFollowing,
-    'totalPost': totalPost,
+    'totalThreads': totalThreads,
     'followers': followers,
     'following': following
   };

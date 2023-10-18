@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:threads_clone/consts.dart';
 class UserImagePicker extends StatefulWidget {
   final void Function(File pickedImage)imagePickFn;
   // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
@@ -18,14 +20,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
       source: ImageSource.gallery
     );
     if(pickedImageFile == null){
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Please pick an image'),
-          // ignore: deprecated_member_use, use_build_context_synchronously
-          backgroundColor: Theme.of(context).errorColor,
-        ),      
-      );
+      toast('Please pick an image', Colors.red);
       return;
     }
     setState(() {
@@ -43,7 +38,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
         backgroundColor: const Color.fromRGBO(242, 239, 240, 1),
         backgroundImage: _pickedImage != null ? FileImage(_pickedImage!) : null,
         child: _pickedImage == null ? const Icon(                                
-          Icons.person_add_rounded,
+          CupertinoIcons.person_add_solid,
           size: 32,
           color: Colors.black,
         ) : null,
