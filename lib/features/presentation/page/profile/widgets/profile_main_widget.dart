@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 
+import '../../../widgets/create_thread_widget.dart';
+
 
 class ProfileMainWidget extends StatefulWidget {
   final UserEntity currentUser;
@@ -16,12 +18,12 @@ class ProfileMainWidget extends StatefulWidget {
 class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProviderStateMixin {  
   @override
   Widget build(BuildContext context) {
-    final TabController tabController = TabController(length: 2, vsync: this);
+    final TabController tabController = TabController(length: 3, vsync: this);
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(          
-          splashColor: Colors.white10,          
+          splashColor: backgroundColor,          
           onTap: (){},          
           child: const Icon(
             CupertinoIcons.globe,
@@ -30,25 +32,22 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
         ),
         actions: [
           InkWell(
-            splashColor: Colors.white10,          
+            splashColor: backgroundColor,          
             borderRadius: BorderRadius.circular(12),
             onTap: (){},
             child: const Icon(            
-              CupertinoIcons.bolt_horizontal_circle,
+              CupertinoIcons.at,
               size: 30,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: InkWell(  
-              splashColor: Colors.white10,                      
+              splashColor: backgroundColor,                      
               onTap: () {
-                // BlocProvider.of<AuthCubit>(context).loggedOut();
+                Navigator.of(context, rootNavigator: false).pushNamed(PageConst.settingPage, arguments: widget.currentUser);
               },          
-              child: const Icon(
-                CupertinoIcons.line_horizontal_3_decrease,
-                size: 28,
-              ),
+              child: hamburger()
             ),
           ),          
         ],
@@ -244,17 +243,89 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                 children: [
                   TabBar(
                     controller: tabController,
+                    indicatorWeight: 1,                    
+                    indicatorColor: Colors.black,
+                    unselectedLabelColor: Colors.grey,
                     tabs: const [
-                      Tab(text: 'Threads',),
-                      Tab(text: 'Replies',),
+                      Tab(child: Text(
+                        'Threads',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),),
+                      Tab(child: Text(
+                        'Replies',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),),
+                      Tab(child: Text(
+                        'Reposts',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),),
                     ]
                   ),                
                   Expanded(
                     child: TabBarView(
                       controller: tabController,
-                      children: const [
-                        Text('Threads Tab'),
-                        Text('Replies Tab')
+                      children: [
+                        Center(
+                          child: InkWell(
+                            onTap: (){
+                              showModalBottomSheet(  
+                                isScrollControlled: true,                        
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                                ),
+                                context: context, 
+                                builder: (BuildContext context){
+                                  return CreateThreadWidget(currentUser: widget.currentUser);
+                                }
+                        );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 2,
+                                  color: lightGreyColor
+                                ),
+                                borderRadius: BorderRadius.circular(8)
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 22,
+                                vertical: 7
+                              ),
+                              child: const Text(
+                                'Start your first thread', 
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14
+                                ),
+                              ),
+                            ),
+                          )
+                        ),
+                        const Center(
+                          child: Text(
+                            "You haven't posted any replies yet",
+                            style: TextStyle(
+                              color: grey,
+                              fontSize: 14
+                            ),
+                          )
+                        ),
+                        const Center(
+                          child: Text(
+                            "You haven't reposted any replies yet",
+                            style: TextStyle(
+                              color: grey,
+                              fontSize: 14
+                            ),
+                          )
+                        )
                       ]
                     ),
                   ),                
@@ -266,12 +337,29 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
       )
     );    
   }
-  Widget circleAvatar(double radius, String url) {
-      return CircleAvatar(
-        backgroundColor: Colors.grey,
-        // ignore: unnecessary_null_comparison
-        backgroundImage: url != '' ? NetworkImage(url) : null,
-        radius: radius,
-      );
-    }
+  Widget hamburger(){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          width: 24,
+          height: 2,                                        
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(1),
+            color: Colors.black,
+          ),
+        ),
+        sizeVer(8),
+        Container(
+          width: 16,
+          height: 2,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(1),
+            color: Colors.black,
+          ),
+        )
+      ],
+    );
+  }
 }

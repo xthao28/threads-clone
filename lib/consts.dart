@@ -3,8 +3,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 const lightGreyColor = Color.fromRGBO(231, 232, 231, 1);
 const backgroundColor = Colors.white10;
+const grey = Colors.grey;
 
+class FirebaseConst{
+  static const String users = 'users';
+  static const String threads = 'threads';
+}
 
+class PageConst{
+  static const String settingPage = 'setting-page';  
+}
 
 Widget sizeVer(double height){
   return SizedBox(height: height,);
@@ -14,10 +22,20 @@ Widget sizeHor(double width){
   return SizedBox(width: width,);
 }
 
-class FirebaseConst{
-  static const String users = 'users';
-  static const String threads = 'threads';
+Widget avatarUser(double position, double borderRadius, double radiusCircle, Color color){
+  return Positioned(
+    left: position,
+    child: CircleAvatar(
+      radius: borderRadius,
+      backgroundColor: Colors.white,
+      child: CircleAvatar(
+        radius: radiusCircle,
+        backgroundColor: color
+      ),
+    ),
+  );
 }
+
 
 void toast(String message, Color color){  
   Fluttertoast.showToast(
@@ -42,3 +60,23 @@ void customToast(BuildContext context){
 
   );
 }
+
+Widget circleAvatar(double radius, String url) {
+      return CircleAvatar(
+        backgroundColor: Colors.grey,
+        // ignore: unnecessary_null_comparison
+        backgroundImage: url != '' ? NetworkImage(url) : null,
+        radius: radius,
+      );
+    }
+
+// Future<void> createThread(BuildContext context){
+//   return showModalBottomSheet(
+//     context: context, 
+//     builder: (BuildContext context){
+//       return Container(
+
+//       )
+//     }
+//   );
+// }

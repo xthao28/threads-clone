@@ -6,6 +6,7 @@ import 'package:threads_clone/features/presentation/page/activity/activity_page.
 import 'package:threads_clone/features/presentation/page/home/home_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/search/search_page.dart';
+import 'package:threads_clone/features/presentation/widgets/create_thread_widget.dart';
 
 class MainScreen extends StatefulWidget {
   final String uid;
@@ -30,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {        
+  Widget build(BuildContext context) {            
     return BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
       builder: (context, getSingleUserSate) {
         if(getSingleUserSate is GetSingleUserLoaded){
@@ -38,8 +39,7 @@ class _MainScreenState extends State<MainScreen> {
           return Scaffold(                        
             bottomNavigationBar: BottomAppBar(
               color: Colors.white10,
-              elevation: 0,
-              shape: const CircularNotchedRectangle(),
+              elevation: 0,              
               notchMargin: 10,
               child: SizedBox(
                 height: 60,
@@ -82,17 +82,14 @@ class _MainScreenState extends State<MainScreen> {
                       splashColor: Colors.white10,
                       minWidth: 40,
                       onPressed: () {
-                        showModalBottomSheet(
-                          // shape: ,
+                        showModalBottomSheet(  
+                          isScrollControlled: true,                        
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)
+                          ),
                           context: context, 
                           builder: (BuildContext context){
-                            return Container(
-                              decoration: BoxDecoration(                                
-                                borderRadius: BorderRadius.circular(20)
-                              ),                              
-                              height: 700,
-                              child: const Text('Close Bottom Sheet!'),                              
-                            );
+                            return CreateThreadWidget(currentUser: currentUser);
                           }
                         );
                       },

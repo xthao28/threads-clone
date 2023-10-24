@@ -6,6 +6,7 @@ import 'package:threads_clone/features/presentation/cubit/user/get_other_single_
 import 'package:threads_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/credential/auth_page.dart';
 import 'package:threads_clone/features/presentation/page/main_screen/main_screen.dart';
+import 'package:threads_clone/on_generate_route.dart';
 import 'features/presentation/cubit/auth/auth_cubit.dart';
 import 'injection_container.dart' as di;
 
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.grey,          
         ),
-        initialRoute: '/',
+        onGenerateRoute: OnGenerateRoute.route,
+        initialRoute: '/',  
         routes: {
           '/' :(context) {
             return BlocBuilder<AuthCubit, AuthState>(

@@ -128,10 +128,10 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
   }
 
   @override
-  Future<String> uploadImageToStorage(File? file, bool isPost, String childName) async{
+  Future<String> uploadImageToStorage(File? file, bool isThread, String childName) async{
     Reference ref = firebaseStorage.ref().child(childName).child(firebaseAuth.currentUser!.uid);
 
-    if(isPost){
+    if(isThread){
       String id = const Uuid().v1();
       ref = ref.child(id);
     }
