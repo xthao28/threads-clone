@@ -57,7 +57,7 @@ class ThreadModel extends ThreadEntity{
   }
 
   Map<String, dynamic> toJson() => {
-    'createAt': createdAt,
+    'createdAt': createdAt,
     'creatorUid': creatorUid,
     'description': description,
     'likes': likes,

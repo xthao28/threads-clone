@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
+import 'package:threads_clone/features/presentation/page/profile/widgets/edit_profile.dart';
 
 import '../../../widgets/create_thread_widget.dart';
 
@@ -70,9 +71,9 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                   child: Column(     
                     crossAxisAlignment: CrossAxisAlignment.start,           
                     children: [
-                      const Text(
-                        'Xuân Thảo',
-                        style: TextStyle(
+                      Text(
+                        widget.currentUser.name!,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                           color: Colors.black
@@ -185,7 +186,18 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 InkWell(
-                  onTap:(){},
+                  onTap:(){
+                    showModalBottomSheet(  
+                      isScrollControlled: true,                        
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                      ),
+                      context: context, 
+                      builder: (BuildContext context){
+                        return EditProfile(currentUser: widget.currentUser);
+                      }
+                    );
+                  },
                   borderRadius: BorderRadius.circular(8),                            
                   child: Container(                                             
                     padding:const EdgeInsets.symmetric(
@@ -283,7 +295,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                                 builder: (BuildContext context){
                                   return CreateThreadWidget(currentUser: widget.currentUser);
                                 }
-                        );
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(

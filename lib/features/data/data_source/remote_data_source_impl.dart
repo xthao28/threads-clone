@@ -29,8 +29,8 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
 
   Future<void> createUserWithImage(UserEntity user, String profileUrl) async{
     final userCollection = firebaseFirestore.collection(FirebaseConst.users);
-
-    final uid = await getCurrentUid();
+    
+    final uid = await getCurrentUid();    
 
     userCollection.doc(uid).get().then((userDoc) {
       final newUser = UserModel(
@@ -53,7 +53,7 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
       }else{
         userCollection.doc(uid).update(newUser);
       }      
-    }).catchError((error){
+    }).catchError((error){      
       toast('Some error occur', Colors.red);
     });
   }
@@ -70,6 +70,7 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
     try{
       if(user.email!.isNotEmpty || user.password!.isNotEmpty){
         await firebaseAuth.signInWithEmailAndPassword(email: user.email!, password: user.password!);
+        // toast('Sign In Success', Colors.green);
       }else{
         toast('Fields cannot be empty', Colors.red);
       }
@@ -89,18 +90,19 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
 
   @override
   Future<void> signUpUser(UserEntity user) async{
-    try{
+    try{                       
       await firebaseAuth.createUserWithEmailAndPassword(email: user.email!, password: user.password!).then((currentUser) async{
         if(currentUser.user?.uid != null){
           if(user.imageFile != null){
-            uploadImageToStorage(user.imageFile, false, 'profileImages').then((profileUrl) {
-              createUserWithImage(user, profileUrl);
+            await uploadImageToStorage(user.imageFile, false, 'profileImages').then((profileUrl) {
+              createUserWithImage(user, profileUrl);              
             });
           }
           else{
             createUserWithImage(user, '');
           }
         }
+        toast('Sign Up Success', Colors.green);
       }); 
       return;      
     }on FirebaseAuthException catch(e){
@@ -121,8 +123,7 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
     if(user.bio != '' || user.bio != null) userInfo['bio'] = user.bio;
     if(user.name != '' || user.name != null) userInfo['name'] = user.name;
     if(user.link != '' || user.link != null) userInfo['link'] = user.link;
-    if(user.profileUrl != '' || user.profileUrl != null) userInfo['profileUrl'] = user.profileUrl;
-    if(user.username != '' || user.username != null) userInfo['username'] = user.username;
+    if(user.profileUrl != '' || user.profileUrl != null) userInfo['profileUrl'] = user.profileUrl;    
 
     userCollection.doc(user.uid).update(userInfo);
   }
@@ -172,7 +173,7 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
     final newThread = ThreadModel(
       createdAt: threadEntity.createdAt,
       creatorUid: threadEntity.creatorUid,
-      description: threadEntity.description,
+      description: threadEntity.description,      
       likes: const [],
       totalComments: 0,
       totalLikes: 0,
@@ -190,8 +191,8 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
           final userCollection = firebaseFirestore.collection(FirebaseConst.users).doc(threadEntity.creatorUid);
           userCollection.get().then((value) {
             if(value.exists){
-              final totalThread = value.get('totalThreads');
-              userCollection.update({'totalThreads': totalThread +1});
+              final totalThreads = value.get('totalThreads');
+              userCollection.update({'totalThreads': totalThreads +1});
               return;
             }
           });

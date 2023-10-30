@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,10 @@ import 'package:threads_clone/features/presentation/page/home/home_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/search/search_page.dart';
 import 'package:threads_clone/features/presentation/widgets/create_thread_widget.dart';
+
+
+
+
 
 class MainScreen extends StatefulWidget {
   final String uid;
@@ -20,13 +25,15 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 
   int currentTab= 0;
+
+
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = const HomePage();
 
 
   @override
   void initState() {
-    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);    
+    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);        
     super.initState();
   }
 
@@ -135,14 +142,14 @@ class _MainScreenState extends State<MainScreen> {
                 )
               )
             ),       
-            body: PageStorage(
-              // ignore: sort_child_properties_last
-              child: currentScreen,
-              bucket: bucket,
-            ),
+            body: 
+              PageStorage(
+                bucket: bucket, 
+              child: currentScreen
+              )
           );
         }
-        return const Center(child: CircularProgressIndicator());
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
       }
     );    
   }

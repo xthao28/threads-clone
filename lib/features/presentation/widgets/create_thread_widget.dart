@@ -260,15 +260,18 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                           borderRadius: BorderRadius.circular(18),
                           color: grey
                         ),                      
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical: 10
                           ),
-                          child: Text(
-                            'Post',
-                            style: TextStyle(
-                              color: Colors.white
+                          child: InkWell(
+                            onTap: _submitThread,
+                            child: const Text(
+                              'Post',
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
                             ),
                           ),
                         ),
@@ -285,9 +288,13 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
   }
   _submitThread(){
     setState(() {
+      if(_pickedImage == null){
+        _createThread(imageUrl: '');
+      }else{
       di.sl<UploadImageToStorageUseCase>().call(_pickedImage!, true, 'threads').then((imageUrl) {
         _createThread(imageUrl: imageUrl);
       });
+      }
     });
   }
 

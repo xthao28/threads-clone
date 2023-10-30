@@ -12,6 +12,7 @@ import 'package:threads_clone/features/domain/usecases/thread/update_thread_usec
 import 'package:threads_clone/features/domain/usecases/user/get_single_other_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_single_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_users_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/user/update_user_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_single_thread/read_single_thread_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_other_single_user/get_other_single_user_cubit.dart';
@@ -76,6 +77,8 @@ Future<void> init() async{
   sl.registerLazySingleton(() => GetSingleOtherUserUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => GetSingleUserUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => GetUsersUseCase(firebaseRepository: sl.call()));
+  sl.registerLazySingleton(() => UpdateUserUseCase(firebaseRepository: sl.call()));
+  
 
 //Thread
   sl.registerLazySingleton(() => CreateThreadUseCase(firebaseRepository: sl.call()));

@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
+import 'package:threads_clone/features/presentation/cubit/auth/auth_cubit.dart';
 
 class SettingMainWidget extends StatelessWidget {
   final UserEntity currentUser;
@@ -64,7 +66,10 @@ class SettingMainWidget extends StatelessWidget {
                   )
                 ),
                 TextButton(
-                  onPressed: (){}, 
+                  onPressed: (){
+                    BlocProvider.of<AuthCubit>(context).loggedOut();
+                    Navigator.pop(context);                                        
+                  }, 
                   child: const Text(
                     'Log out',
                     style: TextStyle(
