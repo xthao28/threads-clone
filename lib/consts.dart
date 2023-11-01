@@ -65,7 +65,7 @@ Widget circleAvatar(double radius, String url) {
       return CircleAvatar(
         backgroundColor: Colors.grey,
         // ignore: unnecessary_null_comparison
-        backgroundImage: url != '' ? NetworkImage(url) : null,
+        backgroundImage: url != ''|| url != null ? NetworkImage(url) : null,
         radius: radius,
       );
     }

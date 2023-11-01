@@ -296,6 +296,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
       });
       }
     });
+    Navigator.of(context).pop();
   }
 
   Future<void> _createThread({required String imageUrl}) async{
