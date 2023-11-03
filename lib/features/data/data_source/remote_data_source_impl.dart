@@ -263,6 +263,12 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
   }
 
   @override
+  Stream<List<ThreadEntity>> readMyThreads(String currentUid) {
+    final threadCollection = firebaseFirestore.collection(FirebaseConst.threads).where('creatorUid', isEqualTo: currentUid);
+    return threadCollection.snapshots().map((querySnapshot) => querySnapshot.docs.map((e) => ThreadModel.fromSnapshot(e)).toList());
+  }
+
+  @override
   Future<void> updateThread(ThreadEntity threadEntity) async {
     final threadCollection = firebaseFirestore.collection(FirebaseConst.threads);
     // ignore: prefer_collection_literals

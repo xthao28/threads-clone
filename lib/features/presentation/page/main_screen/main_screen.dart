@@ -1,7 +1,7 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/activity/activity_page.dart';
 import 'package:threads_clone/features/presentation/page/home/home_page.dart';
@@ -51,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
               child: SizedBox(
                 height: 60,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     MaterialButton(
                       splashColor: Colors.white10,
@@ -63,11 +63,10 @@ class _MainScreenState extends State<MainScreen> {
                           currentTab = 0;
                         });
                       },
-                      child: Icon(
-                        currentTab == 0 ? Icons.home : Icons.home_outlined,
-                        color: currentTab == 0 ? Colors.black : Colors.grey,
-                        size: 32,
-                      ),
+                      child: Image.asset(
+                        'assets/images/${currentTab == 0 ? 'feed-fill.png' : 'feed.png'}',
+                        width: 28
+                      )
                     ),
                     MaterialButton(
                       splashColor: Colors.white10,
@@ -79,11 +78,10 @@ class _MainScreenState extends State<MainScreen> {
                           currentTab = 1;
                         });
                       },
-                      child: Icon(
-                        CupertinoIcons.search,
-                        color: currentTab == 1 ? Colors.black : Colors.grey,
-                        size: 32,
-                      ),
+                      child: Image.asset(
+                        'assets/images/${currentTab == 1 ? 'explore-fill.png' : 'explore.png'}',
+                        width: 28
+                      )
                     ),
                     MaterialButton(
                       splashColor: Colors.white10,
@@ -100,11 +98,10 @@ class _MainScreenState extends State<MainScreen> {
                           }
                         );
                       },
-                      child: const Icon(
-                        Icons.edit_square,
-                        color: Colors.grey,
-                        size: 32,
-                      ),
+                      child: Image.asset(
+                        'assets/images/write.png',
+                        width: 28
+                      )
                     ),
                     MaterialButton(
                       splashColor: Colors.white10,
@@ -116,11 +113,10 @@ class _MainScreenState extends State<MainScreen> {
                           currentTab = 2;
                         });
                       },
-                      child: Icon(
-                        currentTab == 2 ? Icons.favorite : Icons.favorite_outline,
-                        color: currentTab == 2 ? Colors.black : Colors.grey,
-                        size: 32,
-                      ),
+                      child: Image.asset(
+                        'assets/images/${currentTab == 2 ? 'heart-fill.png' : 'heart.png'}',
+                        width: 28
+                      )
                     ),
                     MaterialButton(
                       splashColor: Colors.white10,
@@ -132,11 +128,10 @@ class _MainScreenState extends State<MainScreen> {
                           currentTab = 3;
                         });
                       },
-                      child: Icon(                        
-                        currentTab == 3 ? Icons.person : Icons.person_outline,
-                        color: currentTab == 3 ? Colors.black : Colors.grey,
-                        size: 32,
-                      ),
+                      child: Image.asset(
+                        'assets/images/${currentTab == 3 ? 'account-fill.png' : 'account.png'}',
+                        width: 28
+                      )
                     ),                    
                   ],
                 )
@@ -146,10 +141,10 @@ class _MainScreenState extends State<MainScreen> {
               PageStorage(
                 bucket: bucket, 
               child: currentScreen
-              )
+              )            
           );
         }
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        return Scaffold(body: Center(child: circularIndicatorThreads()));
       }
     );    
   }

@@ -38,7 +38,7 @@ class ThreadCubit extends Cubit<ThreadState>{
     } catch(_){
       emit(ThreadFailure());
     }
-  }
+  }  
 
   Future<void> createThread({required ThreadEntity thread}) async{
     try{
@@ -52,7 +52,7 @@ class ThreadCubit extends Cubit<ThreadState>{
 
   Future<void> likeThread({required ThreadEntity thread}) async{
     try{
-      await createThreadUseCase.call(thread);
+      await likeThreadUseCase.call(thread);
     } on SocketException catch(_){
       emit(ThreadFailure());
     } catch(_){
@@ -62,7 +62,7 @@ class ThreadCubit extends Cubit<ThreadState>{
 
   Future<void> updateThread({required ThreadEntity thread}) async{
     try{
-      await createThreadUseCase.call(thread);
+      await updateThreadUseCase.call(thread);
     } on SocketException catch(_){
       emit(ThreadFailure());
     } catch(_){
@@ -72,7 +72,7 @@ class ThreadCubit extends Cubit<ThreadState>{
 
   Future<void> deleteThread({required ThreadEntity thread}) async{
     try{
-      await createThreadUseCase.call(thread);
+      await deleteThreadUseCase.call(thread);
     } on SocketException catch(_){
       emit(ThreadFailure());
     } catch(_){

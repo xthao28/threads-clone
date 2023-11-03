@@ -1,5 +1,9 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 const lightGreyColor = Color.fromRGBO(231, 232, 231, 1);
 const backgroundColor = Colors.white10;
@@ -36,6 +40,36 @@ Widget avatarUser(double position, double borderRadius, double radiusCircle, Col
   );
 }
 
+Widget circularIndicatorThreads(){
+  return Platform.isIOS ? const CupertinoActivityIndicator() : const CircularProgressIndicator();
+}
+
+Widget circleAvatar(double radius, String url) {
+  return CircleAvatar(
+    backgroundColor: Colors.grey,
+    // ignore: unnecessary_null_comparison
+    backgroundImage: url != ''|| url != null ? NetworkImage(url) : null,
+    radius: radius,
+  );
+}
+
+String formatTimestamp(Timestamp timestamp) {
+  final now = DateTime.now();
+  final postTime = timestamp.toDate(); // The timestamp should be in seconds
+
+  final difference = now.difference(postTime);
+
+  if (difference.inDays > 0) {
+    return '${difference.inDays}d';
+  } else if (difference.inHours > 0) {
+    return '${difference.inHours}h';
+  } else if (difference.inMinutes > 0) {
+    return '${difference.inMinutes}m';
+  } else {
+    return 'Just now';
+  }
+}
+
 
 void toast(String message, Color color){  
   Fluttertoast.showToast(
@@ -61,14 +95,6 @@ void customToast(BuildContext context){
   );
 }
 
-Widget circleAvatar(double radius, String url) {
-      return CircleAvatar(
-        backgroundColor: Colors.grey,
-        // ignore: unnecessary_null_comparison
-        backgroundImage: url != ''|| url != null ? NetworkImage(url) : null,
-        radius: radius,
-      );
-    }
 
 // Future<void> createThread(BuildContext context){
 //   return showModalBottomSheet(

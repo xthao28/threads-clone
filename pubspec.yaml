@@ -46,6 +46,7 @@ dependencies:
   fluttertoast: ^8.2.2
   uuid: ^4.1.0
   bloc: ^8.1.2
+  cached_network_image: ^3.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

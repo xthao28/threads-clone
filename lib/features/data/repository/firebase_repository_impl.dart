@@ -63,4 +63,7 @@ class FirebaseRepositoryImpl implements FirebaseRepository{
 
   @override
   Stream<List<ThreadEntity>> readSingleThread(String threadId) => remoteDataSource.readSingleThread(threadId);
+
+  @override
+  Stream<List<ThreadEntity>> readMyThreads(String currentUid) => remoteDataSource.readMyThreads(currentUid);
 }

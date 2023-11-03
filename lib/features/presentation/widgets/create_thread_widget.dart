@@ -295,8 +295,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
         _createThread(imageUrl: imageUrl);
       });
       }
-    });
-    Navigator.of(context).pop();
+    });    
   }
 
   Future<void> _createThread({required String imageUrl}) async{
@@ -315,7 +314,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
       )
     ).then((value) {
       setState(() {
-        _descriptionController.clear();
+        _descriptionController.clear();             
       });      
     });
   }

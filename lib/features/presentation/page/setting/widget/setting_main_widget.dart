@@ -35,7 +35,7 @@ class SettingMainWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                settingButton('Follow and invite friends', CupertinoIcons.person_crop_circle),
+                settingButton('Follow and invite friends', CupertinoIcons.person_add),
                 settingButton('Notifications', CupertinoIcons.bell),
                 settingButton('Your likes', CupertinoIcons.heart),
                 settingButton('Privacy', CupertinoIcons.lock),

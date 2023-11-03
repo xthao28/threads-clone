@@ -6,6 +6,7 @@ import 'package:threads_clone/features/domain/usecases/storage/upload_image_to_s
 import 'package:threads_clone/features/domain/usecases/thread/create_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/delete_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/like_thread_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/thread/read_my_threads_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/read_single_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/read_threads_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/update_thread_usecase.dart';
@@ -13,6 +14,7 @@ import 'package:threads_clone/features/domain/usecases/user/get_single_other_use
 import 'package:threads_clone/features/domain/usecases/user/get_single_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_users_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/update_user_usecase.dart';
+import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_single_thread/read_single_thread_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_other_single_user/get_other_single_user_cubit.dart';
@@ -57,12 +59,16 @@ Future<void> init() async{
     createThreadUseCase: sl.call(), 
     deleteThreadUseCase: sl.call(), 
     likeThreadUseCase: sl.call(), 
-    readThreadsUseCase: sl.call(), 
+    readThreadsUseCase: sl.call(),    
     updateThreadUseCase: sl.call()
     ));
 
   sl.registerFactory(() => ReadSingleThreadCubit(
     readSingleThreadUseCase: sl.call()
+  ));
+
+  sl.registerFactory(() => ReadMyThreadsCubit(
+    readMyThreadsUseCase: sl.call()
   ));
 
 //User
@@ -87,6 +93,7 @@ Future<void> init() async{
   sl.registerLazySingleton(() => ReadSingleThreadUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => ReadThreadsUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => UpdateThreadUseCase(firebaseRepository: sl.call()));
+  sl.registerLazySingleton(() => ReadMyThreadsUseCase(firebaseRepository: sl.call()));
 
 //Upload image to storage
   sl.registerLazySingleton(() => UploadImageToStorageUseCase(firebaseRepository: sl.call()));

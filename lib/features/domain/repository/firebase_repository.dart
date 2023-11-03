@@ -26,4 +26,5 @@ abstract class FirebaseRepository{
   Future<void> likeThread(ThreadEntity threadEntity);
   Stream<List<ThreadEntity>> readThreads(ThreadEntity threadEntity);
   Stream<List<ThreadEntity>> readSingleThread(String threadId);
+  Stream<List<ThreadEntity>> readMyThreads(String currentUid);
 }
