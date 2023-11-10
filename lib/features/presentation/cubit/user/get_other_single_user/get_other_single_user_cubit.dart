@@ -11,7 +11,7 @@ class GetOtherSingleUserCubit extends Cubit<GetOtherSingleUserState>{
   final GetSingleOtherUserUseCase getSingleOtherUserUseCase;
   GetOtherSingleUserCubit({required this.getSingleOtherUserUseCase}) : super(GetOtherSingleUserInitial());
 
-  Future<void> getOtherSingleUser(String otherUid)async {
+  Future<void> getOtherSingleUser({required String otherUid})async {
     emit(GetOtherSingleUserLoading());
     try{
       final streamResponse = getSingleOtherUserUseCase.call(otherUid);

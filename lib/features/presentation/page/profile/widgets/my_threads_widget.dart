@@ -8,10 +8,20 @@ import '../../../../../consts.dart';
 import '../../../widgets/create_thread_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
-class MyThreadsWidget extends StatelessWidget {
+class MyThreadsWidget extends StatefulWidget {
   final UserEntity currentUser;
   const MyThreadsWidget({super.key, required this.currentUser});
 
+  @override
+  State<MyThreadsWidget> createState() => _MyThreadsWidgetState();
+}
+
+class _MyThreadsWidgetState extends State<MyThreadsWidget> {
+  @override
+  void initState() {
+    BlocProvider.of<ReadMyThreadsCubit>(context).readMyThreads(currentUid: widget.currentUser.uid!);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ReadMyThreadsCubit, ReadMyThreadsState>(
@@ -52,7 +62,7 @@ class MyThreadsWidget extends StatelessWidget {
             ),
             context: context, 
             builder: (BuildContext context){
-              return CreateThreadWidget(currentUser: currentUser,);
+              return CreateThreadWidget(currentUser: widget.currentUser,);
             }
           );
         },

@@ -5,6 +5,8 @@ import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
+import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
+import 'package:threads_clone/features/presentation/page/profile/single_user_profile_page.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
 class SingleCardThreadWidget extends StatefulWidget {
@@ -102,11 +104,21 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                       Row(  
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,                    
                         children: [
-                          Text(
-                            widget.thread.username!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => _currentUid == widget.thread.creatorUid ?
+                                  const ProfilePage() :
+                                  SingleUserProfilePage(otherUserId: widget.thread.creatorUid.toString())
+                                )
+                              );
+                            },
+                            child: Text(
+                              widget.thread.username!,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16
+                              ),
                             ),
                           ),
                           Row(                          

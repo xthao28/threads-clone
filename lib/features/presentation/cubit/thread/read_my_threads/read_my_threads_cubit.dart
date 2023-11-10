@@ -11,7 +11,7 @@ class ReadMyThreadsCubit extends Cubit<ReadMyThreadsState>{
   final ReadMyThreadsUseCase readMyThreadsUseCase;
   ReadMyThreadsCubit({required this.readMyThreadsUseCase}) : super(ReadMyThreadsInitial());
 
-  Future<void> readMyThreads(String currentUid) async {
+  Future<void> readMyThreads({required String currentUid}) async {
     emit(ReadMyThreadsLoading());
     try{
       final streamResponse = readMyThreadsUseCase.call(currentUid);

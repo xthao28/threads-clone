@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
-import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/edit_profile.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/my_threads_widget.dart';
 import 'package:threads_clone/features/presentation/page/setting/setting_page.dart';
@@ -20,25 +18,25 @@ class ProfileMainWidget extends StatefulWidget {
 }
 
 class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProviderStateMixin {  
-  @override
-  void initState() {
-    BlocProvider.of<ReadMyThreadsCubit>(context).readMyThreads(widget.currentUser.uid!);
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   BlocProvider.of<ReadMyThreadsCubit>(context).readMyThreads(currentUid: widget.currentUser.uid!);
+  //   super.initState();
+  // }
   @override
   Widget build(BuildContext context) {
     final TabController tabController = TabController(length: 3, vsync: this);
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: InkWell(          
-          splashColor: backgroundColor,          
-          onTap: (){},          
-          child: const Icon(
-            CupertinoIcons.globe,
-            size: 30,
-          ),
-        ),
+        // leading: InkWell(          
+        //   splashColor: backgroundColor,          
+        //   onTap: (){},          
+        //   child: const Icon(
+        //     CupertinoIcons.globe,
+        //     size: 30,
+        //   ),
+        // ),
         actions: [
           InkWell(
             splashColor: backgroundColor,          
