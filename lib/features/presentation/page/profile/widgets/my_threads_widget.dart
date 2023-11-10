@@ -52,7 +52,7 @@ class MyThreadsWidget extends StatelessWidget {
             ),
             context: context, 
             builder: (BuildContext context){
-              return CreateThreadWidget(currentUser: currentUser);
+              return CreateThreadWidget(currentUser: currentUser,);
             }
           );
         },

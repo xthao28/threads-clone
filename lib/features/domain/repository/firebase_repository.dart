@@ -18,6 +18,7 @@ abstract class FirebaseRepository{
   Stream<List<UserEntity>> getUsers(UserEntity user);
   Stream<List<UserEntity>> getSingleOtherUser(String otherUid);
   Future<String> uploadImageToStorage(File? file, bool isPost, String childName);
+  Future<void> followUnFollowUser(UserEntity user);
 
   //Thread
   Future<void> createThread(ThreadEntity threadEntity);
@@ -26,5 +27,5 @@ abstract class FirebaseRepository{
   Future<void> likeThread(ThreadEntity threadEntity);
   Stream<List<ThreadEntity>> readThreads(ThreadEntity threadEntity);
   Stream<List<ThreadEntity>> readSingleThread(String threadId);
-  Stream<List<ThreadEntity>> readMyThreads(String currentUid);
+  Stream<List<ThreadEntity>> readMyThreads(String currentUid);  
 }

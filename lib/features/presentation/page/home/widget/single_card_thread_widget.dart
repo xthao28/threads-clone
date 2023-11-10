@@ -133,10 +133,10 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
                         child: Text(                        
-                          widget.thread.description!,
-                          overflow: TextOverflow.clip,
+                          widget.thread.description!,                                                    
+                          overflow: TextOverflow.clip,                          
                           style: const TextStyle(
-                            fontSize: 16
+                            fontSize: 16,                            
                           ),                        
                         ),
                       ), 

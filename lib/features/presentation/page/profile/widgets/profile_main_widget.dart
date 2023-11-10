@@ -6,6 +6,7 @@ import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/edit_profile.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/my_threads_widget.dart';
+import 'package:threads_clone/features/presentation/page/setting/setting_page.dart';
 
 
 
@@ -53,7 +54,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
             child: InkWell(  
               splashColor: backgroundColor,                      
               onTap: () {                
-                Navigator.of(context, rootNavigator: false).pushNamed(PageConst.settingPage, arguments: widget.currentUser);
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingPage(currentUser: widget.currentUser)));
               },          
               child: hamburger()
             ),
@@ -211,7 +212,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                         borderRadius: BorderRadius.circular(8),                            
                         child: Container(                                             
                           padding:const EdgeInsets.symmetric(
-                            horizontal: 36,
+                            horizontal: 42,
                             vertical: 7
                           ),
                           decoration: BoxDecoration(

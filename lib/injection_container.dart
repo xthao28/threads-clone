@@ -10,6 +10,7 @@ import 'package:threads_clone/features/domain/usecases/thread/read_my_threads_us
 import 'package:threads_clone/features/domain/usecases/thread/read_single_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/read_threads_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/update_thread_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/user/follow_un_follow_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_single_other_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_single_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_users_usecase.dart';
@@ -52,7 +53,8 @@ Future<void> init() async{
 
   sl.registerFactory(() => UserCubit(
     getUsersUseCase: sl.call(), 
-    updateUserUseCase: sl.call()
+    updateUserUseCase: sl.call(),
+    followUnFollowUserUseCase: sl.call()
   ));
 
   sl.registerFactory(() => ThreadCubit(
@@ -84,6 +86,7 @@ Future<void> init() async{
   sl.registerLazySingleton(() => GetSingleUserUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => GetUsersUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => UpdateUserUseCase(firebaseRepository: sl.call()));
+  sl.registerLazySingleton(() => FollowUnFollowUserUseCase(firebaseRepository: sl.call()));
   
 
 //Thread

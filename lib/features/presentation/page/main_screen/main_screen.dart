@@ -5,9 +5,15 @@ import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/activity/activity_page.dart';
 import 'package:threads_clone/features/presentation/page/home/home_page.dart';
-import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/search/search_page.dart';
-import 'package:threads_clone/features/presentation/widgets/create_thread_widget.dart';
+import 'package:threads_clone/features/presentation/page/thread/thread_page.dart';
+import 'package:threads_clone/features/presentation/widgets/bottom_navigation_bar/bottom_navigation.dart';
+
+import '../../widgets/bottom_navigation_bar/tab_item.dart';
+import '../../widgets/create_thread_widget.dart';
+import '../profile/profile_page.dart';
+
+
 
 
 
@@ -19,32 +25,120 @@ class MainScreen extends StatefulWidget {
   const MainScreen({super.key, required this.uid});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<MainScreen> createState() => MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-
-  int currentTab= 0;
-
-
-  final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = const HomePage();
-
-
+class MainScreenState extends State<MainScreen> {
+  static String currentUid = '';
+  static int currentIndex = 0;  
   @override
-  void initState() {
-    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);        
-    super.initState();
+  void initState() {       
+    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);                  
+    super.initState();             
+  }   
+  final List<TabItem> tabs = [
+    TabItem(
+      tabName: '',        
+      page: const HomePage()
+    ),
+    TabItem(
+      tabName: '',       
+      page: const SearchPage()
+    ),
+    TabItem(
+      tabName: '',       
+      page: const ThreadPage()
+    ),
+    TabItem(
+      tabName: '',        
+      page: const ActivityPage()
+    ),
+    TabItem(
+      tabName: '',  
+      page: const ProfilePage()
+    ),
+  ]; 
+
+  
+
+  MainScreenState() {
+    // indexing is necessary for proper funcationality
+    // of determining which tab is active
+    tabs.asMap().forEach((index, details) {
+      details.setIndex(index);
+    });
   }
 
   @override
-  Widget build(BuildContext context) {            
+  Widget build(BuildContext context) {      
+    
     return BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
       builder: (context, getSingleUserSate) {
         if(getSingleUserSate is GetSingleUserLoaded){
           final currentUser = getSingleUserSate.user;
-          return Scaffold(                        
-            bottomNavigationBar: BottomAppBar(
+          void selectPage(int index){
+            if (index == currentIndex) {
+              // pop to first route
+              // if the user taps on the active tab
+              tabs[index].key.currentState!.popUntil((route) => route.isFirst);
+            } else {
+              // update the state
+              // in order to repaint               
+              if(index == 2) {
+                showModalBottomSheet(  
+                  isScrollControlled: true,                        
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  context: context, 
+                  builder: (BuildContext context){
+                    return CreateThreadWidget(currentUser: currentUser,);
+                  }
+                );
+              } else{ 
+                setState(() {
+                  currentIndex = index;                
+                });                           
+              }            
+            } 
+          }  
+          return WillPopScope(
+            onWillPop: () async {
+              final isFirstRouteIncurrentIndex =
+                  !await tabs[currentIndex].key.currentState!.maybePop();
+              if (isFirstRouteIncurrentIndex) {
+                // if not on the 'main' tab
+                if (currentIndex != 0) {
+                  // select 'main' tab
+                  selectPage(0);
+                  // back button handled by app
+                  return false;
+                }
+              }
+              // let system handle back button if we're on the first route
+              return isFirstRouteIncurrentIndex;
+            },
+            child: Scaffold(   
+              body: 
+                IndexedStack(
+                  index: currentIndex,
+                  children: tabs.map((e) => e.page).toList()
+                ),                     
+              bottomNavigationBar: BottomNavigation(
+                onSelectTab: selectPage, 
+                tabs: tabs
+              )
+            ),
+          );
+        }
+        return Scaffold(body: Center(child: circularIndicatorThreads()));
+      }
+    );    
+  }
+}
+
+/*
+   BottomAppBar(
               color: Colors.white10,
               elevation: 0,              
               notchMargin: 10,
@@ -57,14 +151,10 @@ class _MainScreenState extends State<MainScreen> {
                       splashColor: Colors.white10,
                       minWidth: 40,
                       onPressed: () {
-                        setState(() {
-                          currentScreen =
-                              const HomePage(); // if user taps on this dashboard tab will be active
-                          currentTab = 0;
-                        });
+                        selectPage(0);
                       },
                       child: Image.asset(
-                        'assets/images/${currentTab == 0 ? 'feed-fill.png' : 'feed.png'}',
+                        'assets/images/${currentIndex == 0 ? 'feed-fill.png' : 'feed.png'}',
                         width: 28
                       )
                     ),
@@ -73,13 +163,11 @@ class _MainScreenState extends State<MainScreen> {
                       minWidth: 40,
                       onPressed: () {
                         setState(() {
-                          currentScreen =
-                              const SearchPage(); // if user taps on this dashboard tab will be active
-                          currentTab = 1;
+                         selectPage(1);
                         });
                       },
                       child: Image.asset(
-                        'assets/images/${currentTab == 1 ? 'explore-fill.png' : 'explore.png'}',
+                        'assets/images/${currentIndex == 1 ? 'explore-fill.png' : 'explore.png'}',
                         width: 28
                       )
                     ),
@@ -108,13 +196,11 @@ class _MainScreenState extends State<MainScreen> {
                       minWidth: 40,
                       onPressed: () {
                         setState(() {
-                          currentScreen =
-                              ActivityPage(currentUser: currentUser,); // if user taps on this dashboard tab will be active
-                          currentTab = 2;
+                          selectPage(3);
                         });
                       },
                       child: Image.asset(
-                        'assets/images/${currentTab == 2 ? 'heart-fill.png' : 'heart.png'}',
+                        'assets/images/${currentIndex == 3 ? 'heart-fill.png' : 'heart.png'}',
                         width: 28
                       )
                     ),
@@ -123,29 +209,16 @@ class _MainScreenState extends State<MainScreen> {
                       minWidth: 40,
                       onPressed: () {
                         setState(() {
-                          currentScreen =
-                              ProfilePage(currentUser: currentUser); // if user taps on this dashboard tab will be active
-                          currentTab = 3;
+                          selectPage(4);
                         });
                       },
                       child: Image.asset(
-                        'assets/images/${currentTab == 3 ? 'account-fill.png' : 'account.png'}',
+                        'assets/images/${currentIndex == 4 ? 'account-fill.png' : 'account.png'}',
                         width: 28
                       )
                     ),                    
                   ],
                 )
               )
-            ),       
-            body: 
-              PageStorage(
-                bucket: bucket, 
-              child: currentScreen
-              )            
-          );
-        }
-        return Scaffold(body: Center(child: circularIndicatorThreads()));
-      }
-    );    
-  }
-}
+            ),               
+ */

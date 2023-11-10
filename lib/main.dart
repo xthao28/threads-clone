@@ -10,7 +10,6 @@ import 'package:threads_clone/features/presentation/cubit/user/get_single_user/g
 import 'package:threads_clone/features/presentation/cubit/user/user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/credential/auth_page.dart';
 import 'package:threads_clone/features/presentation/page/main_screen/main_screen.dart';
-import 'package:threads_clone/on_generate_route.dart';
 import 'features/presentation/cubit/auth/auth_cubit.dart';
 import 'injection_container.dart' as di;
 
@@ -42,21 +41,16 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.grey,          
         ),
-        onGenerateRoute: OnGenerateRoute.route,
-        initialRoute: '/',  
-        routes: {
-          '/' :(context) {
-            return BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, authSate){                
-                if(authSate is Authenticated){                  
-                  return MainScreen(uid: authSate.uid);
-                }else{
-                  return const AuthPage();
-                }
-              }
-            );
+        // onGenerateRoute: OnGenerateRoute.route,
+        home: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, authState){                
+            if(authState is Authenticated){                  
+              return MainScreen(uid: authState.uid);
+            }else{
+              return const AuthPage();
+            }
           }
-        },
+        )       
       )
     );
   }
