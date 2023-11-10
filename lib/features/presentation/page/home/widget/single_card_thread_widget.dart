@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/consts.dart';
@@ -130,14 +131,13 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                                 ),
                               ),
                               sizeHor(5),
-                              InkWell(
-                                onTap: (){
-                                  print(widget.thread.threadImageUrl);
-                                },
-                                child: const Icon(
-                                  Icons.more_horiz
-                                ),
-                              )
+                              if(_currentUid == widget.thread.creatorUid)
+                                InkWell(
+                                  onTap: _showOption,                                                              
+                                  child: const Icon(
+                                    Icons.more_horiz
+                                  ),
+                                )
                             ],
                           )
                         ],
@@ -245,5 +245,85 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
         threadId: widget.thread.threadId
       )
     );    
+  }
+
+  Future _showOption(){
+    return showModalBottomSheet(
+      useRootNavigator: true,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10)
+        )
+      ),
+      context: context, 
+      builder: (BuildContext context){
+        return FractionallySizedBox(
+          heightFactor: 0.15,
+          child: Container(
+            padding: const EdgeInsets.only(
+              top: 7,
+              left: 16,
+              right: 16,              
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 42,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5/2),
+                    color: grey
+                  ),
+                ),
+                sizeVer(15),
+                InkWell(
+                  splashColor: backgroundColor,
+                  onTap: _deleteThread,
+                  child: Container(                                      
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.grey.shade200
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 15
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            'Delete',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700
+                            ),
+                          ),
+                          Icon(
+                            CupertinoIcons.delete,
+                            size: 24,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      }
+    );
+  }
+
+  _deleteThread(){
+    BlocProvider.of<ThreadCubit>(context).deleteThread(
+      thread: ThreadEntity(
+        threadId: widget.thread.threadId
+      )
+    ).then((value) => Navigator.pop(context));
   }
 }

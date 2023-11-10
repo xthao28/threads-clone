@@ -6,7 +6,7 @@ import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_other_single_user/get_other_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/user_cubit.dart';
-import 'package:threads_clone/features/presentation/page/profile/widgets/your_threads_widget.dart';
+import 'package:threads_clone/features/presentation/page/profile/widgets/other_user_thread_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
 
@@ -258,7 +258,7 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                           child: TabBarView(
                             controller: tabController,
                             children: [
-                              YourThreadsWiget(otherUser: singleUser),
+                              OtherUserThreadWidget(otherUser: singleUser),
                               const Center(
                                 child: Text(
                                   "No replies yet",

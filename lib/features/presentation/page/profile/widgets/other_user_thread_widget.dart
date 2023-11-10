@@ -9,15 +9,15 @@ import 'package:threads_clone/injection_container.dart' as di;
 
 import '../../home/widget/single_card_thread_widget.dart';
 
-class YourThreadsWiget extends StatefulWidget {
+class OtherUserThreadWidget extends StatefulWidget {
   final UserEntity otherUser;
-  const YourThreadsWiget({super.key, required this.otherUser});
+  const OtherUserThreadWidget({super.key, required this.otherUser});
 
   @override
-  State<YourThreadsWiget> createState() => _YourThreadsWigetState();
+  State<OtherUserThreadWidget> createState() => _OtherUserThreadWidgetState();
 }
 
-class _YourThreadsWigetState extends State<YourThreadsWiget> {
+class _OtherUserThreadWidgetState extends State<OtherUserThreadWidget> {
   @override
   void initState() {
     BlocProvider.of<ThreadCubit>(context).readThreads(thread: const ThreadEntity());

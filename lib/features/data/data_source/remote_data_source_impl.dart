@@ -318,7 +318,7 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
 
   @override
   Stream<List<ThreadEntity>> readThreads(ThreadEntity threadEntity) {
-    final threadCollection = firebaseFirestore.collection(FirebaseConst.threads);
+    final threadCollection = firebaseFirestore.collection(FirebaseConst.threads).orderBy('createdAt', descending: true);
     return threadCollection.snapshots().map((querySnapshot) => querySnapshot.docs.map((e) => ThreadModel.fromSnapshot(e)).toList());
   }
 
