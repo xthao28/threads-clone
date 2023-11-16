@@ -305,7 +305,7 @@ Widget title(String text){
   }
 
   Future<void> _signUpPage() async{
-    BlocProvider.of<CredentialCubit>(context).signUpUser(
+    await BlocProvider.of<CredentialCubit>(context).signUpUser(
       user: UserEntity(
         email: _emailController.text,
         password: _passwordController.text,

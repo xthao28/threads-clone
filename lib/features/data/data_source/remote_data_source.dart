@@ -17,6 +17,8 @@ abstract class FirebaseRemoteDataSource{
   Stream<List<UserEntity>> getSingleUser(String uid);
   Stream<List<UserEntity>> getUsers(UserEntity user);
   Stream<List<UserEntity>> getSingleOtherUser(String otherUid);
+  Stream<List<UserEntity>> getFollowers(List<dynamic> listFollowers);
+  Stream<List<UserEntity>> getFollowing(List<dynamic> listFollowing);
   Future<void> followUnFollowUser(UserEntity user);
 
   //Thread

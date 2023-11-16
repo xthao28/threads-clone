@@ -198,8 +198,11 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                         onTap:(){
                           showModalBottomSheet(  
                             isScrollControlled: true,                        
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10)
+                              )
                             ),
                             context: context, 
                             builder: (BuildContext context){
@@ -283,7 +286,8 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                       controller: tabController,
                       indicatorWeight: 1,                    
                       indicatorColor: Colors.black,
-                      unselectedLabelColor: Colors.grey,                      
+                      unselectedLabelColor: Colors.grey,    
+                      splashFactory: NoSplash.splashFactory,                  
                       tabs: [
                         Tab(child: labelTab('Threads')),
                         Tab(child: labelTab('Replies'),),

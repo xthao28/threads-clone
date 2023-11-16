@@ -17,6 +17,8 @@ abstract class FirebaseRepository{
   Stream<List<UserEntity>> getSingleUser(String uid);
   Stream<List<UserEntity>> getUsers(UserEntity user);
   Stream<List<UserEntity>> getSingleOtherUser(String otherUid);
+  Stream<List<UserEntity>> getFollowers(List<dynamic> listFollowers);
+  Stream<List<UserEntity>> getFollowing(List<dynamic> listFollowing);
   Future<String> uploadImageToStorage(File? file, bool isPost, String childName);
   Future<void> followUnFollowUser(UserEntity user);
 

@@ -222,7 +222,23 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
     return userCollection.snapshots().map((querySnapshot) => querySnapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList());
   }
 
+  @override
+  Stream<List<UserEntity>> getFollowers(List<dynamic> listFollowers){
+    if (listFollowers.isEmpty) {      
+      return Stream.value([]);
+    }
+    final userCollection = firebaseFirestore.collection(FirebaseConst.users).where('uid', whereIn: listFollowers);
+    return userCollection.snapshots().map((querySnapshot) => querySnapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList());
+  }
 
+  @override
+  Stream<List<UserEntity>> getFollowing(List<dynamic> listFollowing){
+    if (listFollowing.isEmpty) {      
+      return Stream.value([]);
+    }
+    final userCollection = firebaseFirestore.collection(FirebaseConst.users).where('uid', whereIn: listFollowing);
+    return userCollection.snapshots().map((querySnapshot) => querySnapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList());
+  }
 
   //Thread
   

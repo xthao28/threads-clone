@@ -11,6 +11,8 @@ import 'package:threads_clone/features/domain/usecases/thread/read_single_thread
 import 'package:threads_clone/features/domain/usecases/thread/read_threads_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/update_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/follow_un_follow_user_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/user/get_followers_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/user/get_following_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_single_other_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_single_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_users_usecase.dart';
@@ -18,6 +20,8 @@ import 'package:threads_clone/features/domain/usecases/user/update_user_usecase.
 import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_single_thread/read_single_thread_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
+import 'package:threads_clone/features/presentation/cubit/user/get_followers/get_followers_cubit.dart';
+import 'package:threads_clone/features/presentation/cubit/user/get_following/get_following_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_other_single_user/get_other_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/user_cubit.dart';
@@ -73,9 +77,23 @@ Future<void> init() async{
     readMyThreadsUseCase: sl.call()
   ));
 
+  sl.registerFactory(() => GetFollowersCubit(
+    getFollowersUseCase: sl.call()
+  ));
+
+  sl.registerFactory(() => GetFollowingCubit(
+    getFollowingUseCase: sl.call()
+  ));
+
+  sl.registerFactory(() => GetOtherSingleUserCubit(
+    getSingleOtherUserUseCase: sl.call()
+  ));
+  
+  sl.registerFactory(() => GetSingleUserCubit(
+    getSingleUserUseCase: sl.call()
+  ));
+
 //User
-  sl.registerFactory(() => GetOtherSingleUserCubit(getSingleOtherUserUseCase: sl.call()));
-  sl.registerFactory(() => GetSingleUserCubit(getSingleUserUseCase: sl.call()));
 
   sl.registerLazySingleton(() => GetCurrentUidUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => IsSignInUseCase(firebaseRepository: sl.call()));
@@ -85,6 +103,8 @@ Future<void> init() async{
   sl.registerLazySingleton(() => GetSingleOtherUserUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => GetSingleUserUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => GetUsersUseCase(firebaseRepository: sl.call()));
+  sl.registerLazySingleton(() => GetFollowersUseCase(firebaseRepository: sl.call()));
+  sl.registerLazySingleton(() => GetFollowingUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => UpdateUserUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => FollowUnFollowUserUseCase(firebaseRepository: sl.call()));
   

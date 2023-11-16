@@ -216,7 +216,7 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                             ),
                             child: Center(
                               child: Text(
-                                singleUser.followers!.contains(_currentUid) ? 'Unfollow': 'Follow', 
+                                singleUser.followers!.contains(_currentUid) ? 'Following': 'Follow', 
                                 style: TextStyle(
                                   color: singleUser.followers!.contains(_currentUid) ? Colors.black : Colors.white,
                                   fontWeight: FontWeight.w600,

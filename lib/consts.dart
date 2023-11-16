@@ -26,6 +26,22 @@ Widget sizeHor(double width){
   return SizedBox(width: width,);
 }
 
+Widget titlePage(String title){
+  return Padding(
+    padding: const EdgeInsets.symmetric(
+      vertical: 8,
+      horizontal: 16
+    ),
+    child: Text(
+      title,
+      style: const TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.bold
+      ),
+    ),
+  );
+}
+
 Widget avatarUser(double position, double borderRadius, double radiusCircle, Color color){
   return Positioned(
     left: position,

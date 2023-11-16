@@ -25,14 +25,14 @@ class UserCubit extends Cubit<UserState>{
     try{
       final streamResponse = getUsersUseCase.call(user);
       streamResponse.listen((users) {
-        emit(UserLoaded(user: users));
+        emit(UserLoaded(users: users));
       });
     } on SocketException catch(_){
       emit(UserFailure());
     } catch(_){
       emit(UserFailure());
     }
-  }
+  }  
 
   Future<void> updateUser({required UserEntity user}) async{
     try{

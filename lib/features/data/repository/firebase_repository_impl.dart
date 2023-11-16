@@ -44,6 +44,12 @@ class FirebaseRepositoryImpl implements FirebaseRepository{
   Stream<List<UserEntity>> getSingleOtherUser(String otherUid) => remoteDataSource.getSingleOtherUser(otherUid);
 
   @override
+  Stream<List<UserEntity>> getFollowers(List<dynamic> listFollowers) => remoteDataSource.getFollowers(listFollowers);
+  
+  @override
+  Stream<List<UserEntity>> getFollowing(List<dynamic> listFollowing) => remoteDataSource.getFollowing(listFollowing);
+
+  @override
   Future<void> followUnFollowUser(UserEntity user) async => remoteDataSource.followUnFollowUser(user);
 
 
@@ -69,4 +75,5 @@ class FirebaseRepositoryImpl implements FirebaseRepository{
 
   @override
   Stream<List<ThreadEntity>> readMyThreads(String currentUid) => remoteDataSource.readMyThreads(currentUid);
+    
 }
