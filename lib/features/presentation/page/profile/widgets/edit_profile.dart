@@ -121,8 +121,8 @@ class _EditProfileState extends State<EditProfile> {
               color: lightGreyColor,                                    
             ),                
             Padding(
-              padding: EdgeInsets.only(
-                top: checkKeyBoard == 0.0 ? width*0.4 : width*0.2 ,
+              padding: const EdgeInsets.only(
+                // top: checkKeyBoard == 0.0 ? width*0.4 : width*0.2 ,
                 right: 6,
                 left: 6
               ),

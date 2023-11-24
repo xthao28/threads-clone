@@ -68,42 +68,10 @@ class _ActivityMainWidgetState extends State<ActivityMainWidget> with TickerProv
                         controller: tabController,
                         children: [
                           FollowersTabWidget(currentUser: widget.currentUser),
-                          const Center(
-                            child: Text(
-                              "Nothing to see here yet",
-                              style: TextStyle(
-                                color: grey,
-                                fontSize: 14
-                              ),
-                            )
-                          ),
-                          const Center(
-                            child: Text(
-                              "Nothing to see here yet",
-                              style: TextStyle(
-                                color: grey,
-                                fontSize: 14
-                              ),
-                            )
-                          ),
-                          const Center(
-                            child: Text(
-                              "Nothing to see here yet",
-                              style: TextStyle(
-                                color: grey,
-                                fontSize: 14
-                              ),
-                            )
-                          ),
-                          const Center(
-                            child: Text(
-                              "Nothing to see here yet",
-                              style: TextStyle(
-                                color: grey,
-                                fontSize: 14
-                              ),
-                            )
-                          )
+                          nothingToSeeHereYet(),
+                          nothingToSeeHereYet(),
+                          nothingToSeeHereYet(),
+                          nothingToSeeHereYet(),
                         ]
                       ),
                     ),                
@@ -137,6 +105,17 @@ class _ActivityMainWidgetState extends State<ActivityMainWidget> with TickerProv
           ),
         )
       ),
+    );
+  }
+  Widget nothingToSeeHereYet(){
+    return const Center(
+      child: Text(
+        "Nothing to see here yet",
+        style: TextStyle(
+          color: grey,
+          fontSize: 14
+        ),
+      )
     );
   }
 }
