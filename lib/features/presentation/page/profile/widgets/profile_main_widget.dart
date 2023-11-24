@@ -182,7 +182,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                         ),
                         sizeHor(6),
                         Text(
-                          '${widget.currentUser.totalFollowers} followers - linktr.ee/xuanthao_28',
+                          '${widget.currentUser.totalFollowers} followers - linktr.ee/${widget.currentUser.link}',
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.grey
@@ -300,24 +300,8 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                       controller: tabController,
                       children: [
                         MyThreadsWidget(currentUser: widget.currentUser),
-                        const Center(
-                          child: Text(
-                            "You haven't posted any replies yet",
-                            style: TextStyle(
-                              color: grey,
-                              fontSize: 14
-                            ),
-                          )
-                        ),
-                        const Center(
-                          child: Text(
-                            "You haven't reposted any replies yet",
-                            style: TextStyle(
-                              color: grey,
-                              fontSize: 14
-                            ),
-                          )
-                        )
+                        customMessage("You haven't posted any replies yet"),
+                        customMessage("You haven't reposted any replies yet"),
                       ]
                     ),
                   ),                
@@ -361,6 +345,17 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
           ),
         )
       ],
+    );
+  }
+  Widget customMessage(String message){
+    return Center(
+      child: Text(
+        message,
+        style: const TextStyle(
+          color: grey,
+          fontSize: 14
+        ),
+      )
     );
   }
 }
