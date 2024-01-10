@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
+import 'package:threads_clone/features/domain/usecases/comment/create_comment_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/comment/delete_comment_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/comment/like_comment_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/comment/read_comments_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/storage/upload_image_to_storage_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/create_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/delete_thread_usecase.dart';
@@ -17,6 +21,8 @@ import 'package:threads_clone/features/domain/usecases/user/get_single_other_use
 import 'package:threads_clone/features/domain/usecases/user/get_single_user_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_users_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/user/update_user_usecase.dart';
+import 'package:threads_clone/features/presentation/cubit/comment/comment_cubit.dart';
+import 'package:threads_clone/features/presentation/cubit/reply/reply_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_single_thread/read_single_thread_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
@@ -27,6 +33,10 @@ import 'package:threads_clone/features/presentation/cubit/user/get_single_user/g
 import 'package:threads_clone/features/presentation/cubit/user/user_cubit.dart';
 import 'features/data/data_source/remote_data_source.dart';
 import 'features/domain/repository/firebase_repository.dart';
+import 'features/domain/usecases/reply/create_reply_usecase.dart';
+import 'features/domain/usecases/reply/delete_reply_usecase.dart';
+import 'features/domain/usecases/reply/like_reply_usecase.dart';
+import 'features/domain/usecases/reply/read_replies_usecase.dart';
 import 'features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'features/domain/usecases/user/is_sign_in_usecase.dart';
 import 'features/domain/usecases/user/sign_in_user_usecase.dart';
@@ -67,7 +77,21 @@ Future<void> init() async{
     likeThreadUseCase: sl.call(), 
     readThreadsUseCase: sl.call(),    
     updateThreadUseCase: sl.call()
-    ));
+  ));
+
+  sl.registerFactory(() => CommentCubit(
+    createCommentUseCase: sl.call(), 
+    deleteCommentUseCase: sl.call(), 
+    likeCommentUseCase: sl.call(), 
+    readCommentsUseCase: sl.call()
+  ));
+
+  sl.registerFactory(() => ReplyCubit(
+    createReplyUseCase: sl.call(), 
+    deleteReplyUseCase: sl.call(), 
+    likeReplyUseCase: sl.call(), 
+    readRepliesUseCase: sl.call()
+  ));
 
   sl.registerFactory(() => ReadSingleThreadCubit(
     readSingleThreadUseCase: sl.call()
@@ -117,6 +141,22 @@ Future<void> init() async{
   sl.registerLazySingleton(() => ReadThreadsUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => UpdateThreadUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => ReadMyThreadsUseCase(firebaseRepository: sl.call()));
+
+
+//Comment
+sl.registerLazySingleton(() => CreateCommentUseCase(firebaseRepository: sl.call()));
+sl.registerLazySingleton(() => DeleteCommentUseCase(firebaseRepository: sl.call()));
+sl.registerLazySingleton(() => LikeCommentUseCase(firebaseRepository: sl.call()));
+sl.registerLazySingleton(() => ReadCommentsUseCase(firebaseRepository: sl.call()));
+
+
+//Reply
+sl.registerLazySingleton(() => CreateReplyUseCase(firebaseRepository: sl.call()));
+sl.registerLazySingleton(() => DeleteReplyUseCase(firebaseRepository: sl.call()));
+sl.registerLazySingleton(() => LikeReplyUseCase(firebaseRepository: sl.call()));
+sl.registerLazySingleton(() => ReadRepliesUseCase(firebaseRepository: sl.call()));
+
+
 
 //Upload image to storage
   sl.registerLazySingleton(() => UploadImageToStorageUseCase(firebaseRepository: sl.call()));

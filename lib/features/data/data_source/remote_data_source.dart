@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 
+import '../../domain/entities/comment/comment_entity.dart';
+import '../../domain/entities/reply/reply_entity.dart';
 import '../../domain/entities/user/user_entity.dart';
 
 abstract class FirebaseRemoteDataSource{
@@ -30,5 +32,17 @@ abstract class FirebaseRemoteDataSource{
   Stream<List<ThreadEntity>> readThreads(ThreadEntity threadEntity);
   Stream<List<ThreadEntity>> readSingleThread(String threadId);
   Stream<List<ThreadEntity>> readMyThreads(String currentUid);
+
+  //Comment
+  Future<void> createComment(CommentEntity commentEntity);
+  Future<void> deleteComment(CommentEntity commentEntity);
+  Future<void> likeComment(CommentEntity commentEntity);
+  Stream<List<CommentEntity>> readComments(String threadId);
+
+  //Reply
+  Future<void> createReply(ReplyEntity replyEntity);
+  Future<void> deleteReply(ReplyEntity replyEntity);
+  Future<void> likeReply(ReplyEntity replyEntity);
+  Stream<List<ReplyEntity>> readReplys(ReplyEntity replyEntity);
 
 }

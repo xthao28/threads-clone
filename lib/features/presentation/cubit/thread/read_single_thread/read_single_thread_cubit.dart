@@ -12,7 +12,7 @@ class ReadSingleThreadCubit extends Cubit<ReadSingleThreadState>{
 
   ReadSingleThreadCubit({required this.readSingleThreadUseCase}) : super(ReadSingleThreadInitial());
 
-  Future<void> getSingleThread(String threadId) async {
+  Future<void> getSingleThread({required String threadId}) async {
     emit(ReadSingleThreadLoading());
     try{
       final streamResponse = readSingleThreadUseCase.call(threadId);
