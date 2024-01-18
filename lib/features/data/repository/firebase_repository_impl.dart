@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:threads_clone/features/data/data_source/remote_data_source.dart';
+import 'package:threads_clone/features/domain/entities/reply/reply_entity.dart';
+import 'package:threads_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/domain/repository/firebase_repository.dart';
@@ -75,5 +77,34 @@ class FirebaseRepositoryImpl implements FirebaseRepository{
 
   @override
   Stream<List<ThreadEntity>> readMyThreads(String currentUid) => remoteDataSource.readMyThreads(currentUid);
+
+
+  //Comment
+
+  @override
+  Future<void> createComment(CommentEntity commentEntity) => remoteDataSource.createComment(commentEntity);
+
+  @override
+  Future<void> deleteComment(CommentEntity commentEntity) => remoteDataSource.deleteComment(commentEntity);
+
+  @override
+  Future<void> likeComment(CommentEntity commentEntity) => remoteDataSource.likeComment(commentEntity);
+
+  @override
+  Stream<List<CommentEntity>> readComments(String threadId) => remoteDataSource.readComments(threadId);
+
+
+  //Reply
+  
+  @override
+  Future<void> createReply(ReplyEntity replyEntity) => remoteDataSource.createReply(replyEntity);
     
+  @override
+  Future<void> deleteReply(ReplyEntity replyEntity) => remoteDataSource.deleteReply(replyEntity);
+
+  @override
+  Future<void> likeReply(ReplyEntity replyEntity) => remoteDataSource.likeReply(replyEntity);
+
+  @override
+  Stream<List<ReplyEntity>> readReplys(ReplyEntity replyEntity) => remoteDataSource.readReplys(replyEntity);
 }

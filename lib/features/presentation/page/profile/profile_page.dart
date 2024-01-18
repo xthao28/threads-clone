@@ -24,9 +24,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GetSingleUserCubit, GetSingleUserState>(
-      builder: (context, getSingleUserSate) {
-        if(getSingleUserSate is GetSingleUserLoaded){
-          final currentUser = getSingleUserSate.user;
+      builder: (context, getSingleUserState) {
+        if(getSingleUserState is GetSingleUserLoaded){
+          final currentUser = getSingleUserState.user;
           return ProfileMainWidget(currentUser: currentUser,); 
         }
         return Scaffold(body: Center(child: circularIndicatorThreads()));

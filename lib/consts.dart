@@ -12,6 +12,8 @@ const grey = Colors.grey;
 class FirebaseConst{
   static const String users = 'users';
   static const String threads = 'threads';
+  static const String comments = 'comments';
+  static const String replies = 'replies';
 }
 
 class PageConst{

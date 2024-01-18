@@ -6,6 +6,7 @@ import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
+import 'package:threads_clone/features/presentation/page/home/create_comment.dart';
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/single_user_profile_page.dart';
 import 'package:threads_clone/injection_container.dart' as di;
@@ -186,7 +187,16 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                                 ),
                               ),
                             ),
-                            iconFile('reply'),
+                            InkWell(
+                              onTap: _createComment,
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 18),
+                                child: Image.asset(
+                                  'assets/images/reply.png',
+                                  width: 22.5,
+                                ),
+                              ),
+                            ),
                             iconFile('repost'),
                             iconFile('paperplane')
                           ],
@@ -245,6 +255,26 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
         threadId: widget.thread.threadId
       )
     );    
+  }
+
+  _createComment(){
+    return showModalBottomSheet(
+      useRootNavigator: true,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10)
+        )
+      ),
+      context: context, 
+      builder: (BuildContext context){
+        return FractionallySizedBox(
+          heightFactor: 0.9,
+          child: CreateComment(thread: widget.thread, currentUid: _currentUid),
+        );
+      }
+    );
   }
 
   Future _showOption(){

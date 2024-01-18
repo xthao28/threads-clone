@@ -180,7 +180,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                                         color: grey,
                                       ),
                                     ),
-                                    sizeVer(20),
+                                    sizeVer(10),
                                     _pickedImage != null ? 
                                       Stack(
                                         children: [
