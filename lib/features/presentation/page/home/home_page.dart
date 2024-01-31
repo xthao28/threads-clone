@@ -1,13 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
-import 'package:threads_clone/features/presentation/page/home/widget/single_card_thread_widget.dart';
+import 'package:threads_clone/features/presentation/page/thread/widgets/single_card_thread_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 import '../../../../consts.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -16,6 +26,7 @@ class HomePage extends StatelessWidget {
         shadowColor: backgroundColor,
         backgroundColor: backgroundColor,
         elevation: 0,
+        centerTitle: true,
         title: Image.asset(
           'assets/images/threads.png',
           width: height*0.037,
@@ -46,6 +57,7 @@ class HomePage extends StatelessWidget {
         ),      
     );
   }
+
   Widget _notThreadsYetWidget(){
     return const Center(
       child: Text(

@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/profile_main_widget.dart';
-
 import '../../../../consts.dart';
 import '../../cubit/user/get_single_user/get_single_user_cubit.dart';
 

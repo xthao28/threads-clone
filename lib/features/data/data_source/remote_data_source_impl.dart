@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -441,7 +442,7 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
   }
 
   @override
-  Stream<List<CommentEntity>> readComments(String threadId) {
+  Stream<List<CommentModel>> readComments(String threadId) {
     final commentCollection = firebaseFirestore.collection(FirebaseConst.threads).doc(threadId).collection(FirebaseConst.comments).orderBy('createdAt', descending: true);
     return commentCollection.snapshots().map((querySnapshot) => querySnapshot.docs.map((e) => CommentModel.fromSnapshot(e)).toList());
   }
