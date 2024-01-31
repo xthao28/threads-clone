@@ -78,11 +78,17 @@ String formatTimestamp(Timestamp timestamp) {
   final difference = now.difference(postTime);
 
   if (difference.inDays > 0) {
-    return '${difference.inDays}d';
+    if (difference.inDays >= 1 && difference.inDays < 2) {
+      return 'Yesterday';
+    } else {
+      return '${postTime.day}/${postTime.month}/${postTime.year}';
+    }
   } else if (difference.inHours > 0) {
     return '${difference.inHours}h';
   } else if (difference.inMinutes > 0) {
     return '${difference.inMinutes}m';
+  } else if (difference.inSeconds > 0) {
+    return '${difference.inSeconds}s';
   } else {
     return 'Just now';
   }
@@ -109,7 +115,6 @@ void customToast(BuildContext context){
   FToast().showToast(
     child: toast,
     toastDuration: const Duration(seconds: 2),
-
   );
 }
 
