@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
-import 'package:threads_clone/features/presentation/page/home/widget/single_card_thread_widget.dart';
+import 'package:threads_clone/features/presentation/page/thread/widgets/single_card_thread_widget.dart';
 
 import '../../../../../consts.dart';
 import '../../../widgets/create_thread_widget.dart';

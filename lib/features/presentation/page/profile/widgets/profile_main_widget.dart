@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
+import 'package:threads_clone/features/presentation/page/profile/widgets/avatar_follower_widget.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/edit_profile.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/my_threads_widget.dart';
 import 'package:threads_clone/features/presentation/page/setting/setting_page.dart';
@@ -141,45 +142,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Row(
                       children: [
-                        SizedBox(
-                          width: 50,
-                          child: Stack(
-                            children: const [
-                              Positioned(
-                                child: CircleAvatar(
-                                  radius: 13,
-                                  backgroundColor: Colors.white,
-                                  child: CircleAvatar(
-                                    radius: 11,
-                                    backgroundColor: Colors.blue
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: 12,
-                                child: CircleAvatar(
-                                  radius: 13,
-                                  backgroundColor: Colors.white,
-                                  child: CircleAvatar(
-                                    radius: 11,
-                                    backgroundColor: Colors.red
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: 24,
-                                child: CircleAvatar(
-                                  radius: 13,
-                                  backgroundColor: Colors.white,
-                                  child: CircleAvatar(
-                                    radius: 11,
-                                    backgroundColor: Colors.yellow
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
+                        AvatarFollowerWidget(currentUser: widget.currentUser),
                         sizeHor(6),
                         Text(
                           '${widget.currentUser.totalFollowers} followers - linktr.ee/${widget.currentUser.link}',

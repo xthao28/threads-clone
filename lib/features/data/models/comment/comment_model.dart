@@ -13,17 +13,19 @@ class CommentModel extends CommentEntity{
   final Timestamp? createdAt;
   final List<String>? likes;
   final num? totalReplies;
+  final num? totalLikes;
   
   const CommentModel({
-    required this.commentId,
-    required this.threadId,
-    required this.creatorUid,
-    required this.description,
-    required this.username,
-    required this.userProfileUrl,
-    required this.createdAt,
-    required this.likes,
-    required this.totalReplies
+    this.commentId,
+    this.threadId,
+    this.creatorUid,
+    this.description,
+    this.username,
+    this.userProfileUrl,
+    this.createdAt,
+    this.likes,
+    this.totalReplies,
+    this.totalLikes
   }) : super(
     commentId: commentId, 
     threadId: threadId, 
@@ -33,7 +35,8 @@ class CommentModel extends CommentEntity{
     userProfileUrl: userProfileUrl, 
     createdAt: createdAt, 
     likes: likes, 
-    totalReplies: totalReplies
+    totalReplies: totalReplies,
+    totalLikes: totalLikes
   );
 
   factory CommentModel.fromSnapshot(DocumentSnapshot snap){
@@ -48,7 +51,8 @@ class CommentModel extends CommentEntity{
       userProfileUrl: snapshot['userProfileUrl'], 
       createdAt: snapshot['createdAt'], 
       likes: List.from(snap.get('likes')), 
-      totalReplies: snapshot['totalReplies']
+      totalReplies: snapshot['totalReplies'],
+      totalLikes: snapshot['totalLikes']
     );
   }
 
@@ -61,7 +65,8 @@ class CommentModel extends CommentEntity{
     'userProfileUrl': userProfileUrl,
     'createdAt': createdAt,
     'likes': likes,
-    'totalReplies': totalReplies,    
+    'totalReplies': totalReplies,   
+    'totalLikes': totalLikes 
   };
 
 }

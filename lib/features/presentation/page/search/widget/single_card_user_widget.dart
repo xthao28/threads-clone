@@ -26,6 +26,7 @@ class _SingleCardUserWidgetState extends State<SingleCardUserWidget> {
         _currentUid = value;
       });
     });
+    BlocProvider.of<UserCubit>(context);
     super.initState();
   }
   @override

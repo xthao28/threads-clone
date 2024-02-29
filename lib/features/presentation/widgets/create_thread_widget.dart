@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
@@ -27,16 +25,6 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
   final TextEditingController _descriptionController = TextEditingController();  
   File? _pickedImage;
   double? height = 0.0;
-  final GlobalKey _globalKey = GlobalKey();
-
-  // @override
-  // void initState() {
-  //   SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-  //     height = _globalKey.currentContext!.size?.height;      
-  //     setState(() {});
-  //   });
-  //   super.initState();
-  // }
   
 
   Future selectImage() async{
@@ -69,12 +57,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
       child: Stack(
         children:[ 
           Container( 
-            padding: const EdgeInsets.only(
-              top: 10,
-              right: 10,
-              left: 10,
-              bottom: 10 
-            ),
+            padding: const EdgeInsets.all(10),
             child: Column(
               children: [
                 Row(
@@ -106,42 +89,41 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                   ],
                 ),
                 const Divider(
-                  color: lightGreyColor,                                    
+                  color: lightGreyColor,        
+                  height: 1,                            
                 ),                
-                Container(
-                  padding: const EdgeInsets.only(top: 8),
+                SizedBox(
+                  // padding: const EdgeInsets.only(top: 0),
                   height: checkKeyBoard == 0 ? width*0.8 : checkKeyBoard,
                   child: SingleChildScrollView(
-                    child: Container(                    
-                      padding: const EdgeInsets.all(6),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
-                                children: [
-                                  circleAvatar(19, widget.currentUser.profileUrl!),
-                                  sizeVer(12),                              
-                                  SizedBox(
-                                    height: height == 0 && _pickedImage == null ? 
-                                    60 : 
-                                    height == 0 && _pickedImage != null ? 
-                                    280 : 
-                                    height != 0 && _pickedImage == null ?
-                                    12 + height! :
-                                    12 + height! + 230
-                                    ,                                                                
-                                    child: const VerticalDivider(                                  
-                                      thickness: 2,
-                                      color: lightGreyColor,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              sizeHor(10),
-                              Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 12
+                      ),
+                      child: IntrinsicHeight(
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,                
+                              children: [
+                                circleAvatar(19, widget.currentUser.profileUrl!),
+                                sizeVer(6),
+                                const Expanded(
+                                  child: VerticalDivider(
+                                    width: 1,
+                                    thickness: 2,
+                                    color: lightGreyColor,
+                                  ),
+                                ),
+                                sizeVer(6),
+                                circleAvatar(8, widget.currentUser.profileUrl!),
+                              ],
+                            ),
+                            // AvatarThreadWidget(thread: widget.thread),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 10),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,8 +135,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                                         fontWeight: FontWeight.w500
                                       ),
                                     ),
-                                    TextFormField( 
-                                      key: _globalKey,                                 
+                                    TextFormField(                                                                        
                                       controller: _descriptionController,                                                                                                    
                                       keyboardType: TextInputType.multiline, 
                                       maxLines: null,                                                                  
@@ -162,14 +143,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                                       decoration: const InputDecoration(
                                         hintText: 'Start a thread...',
                                         border: InputBorder.none
-                                      ),  
-                                      onChanged: (text){
-                                        SchedulerBinding.instance.addPostFrameCallback((_) {
-                                          height = _globalKey.currentContext!.size?.height;
-                                          setState(() {});                                      
-                                          }
-                                        );
-                                      },                                                                                                                                                
+                                      ),                                                                                                                                                                                      
                                     ),
                                     sizeVer(8),
                                     InkWell(
@@ -215,20 +189,15 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                                           )
                                         ]
                                       ) : 
-                                      Container(),
-                                      
+                                      Container(),                              
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: circleAvatar(8, widget.currentUser.profileUrl!),
-                          ),
-                        ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
+                    ),                  
                   ),
                 ),                
               ]
@@ -260,18 +229,15 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                           borderRadius: BorderRadius.circular(18),
                           color: grey
                         ),                      
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 15,
                             vertical: 10
                           ),
-                          child: InkWell(
-                            onTap: _submitThread,
-                            child: const Text(
-                              'Post',
-                              style: TextStyle(
-                                color: Colors.white
-                              ),
+                          child: Text(
+                            'Post',
+                            style: TextStyle(
+                              color: Colors.white
                             ),
                           ),
                         ),
@@ -286,16 +252,16 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
       ),                              
     );
   }
-  _submitThread(){
-    setState(() {
-      if(_pickedImage == null){
-        _createThread(imageUrl: '');
-      }else{
-      di.sl<UploadImageToStorageUseCase>().call(_pickedImage!, true, 'threads').then((imageUrl) {
-        _createThread(imageUrl: imageUrl);
-      });
-      }
-    });    
+  _submitThread(){    
+    if(_pickedImage == null){
+      _createThread(imageUrl: '');
+    }else{
+    di.sl<UploadImageToStorageUseCase>().call(_pickedImage!, true, 'threads').then((imageUrl) {
+      _createThread(imageUrl: imageUrl);
+    }).then((value) {      
+        _descriptionController.clear();      
+      }).then((value) => Navigator.pop(context));   
+    } 
   }
 
   Future<void> _createThread({required String imageUrl}) async{
@@ -312,10 +278,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
         username: widget.currentUser.username,
         threadImageUrl: imageUrl
       )
-    ).then((value) {
-      setState(() {
-        _descriptionController.clear();             
-      });      
-    });
+    );
   }
 }
+

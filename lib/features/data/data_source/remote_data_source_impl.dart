@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -376,7 +377,8 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
       userProfileUrl: commentEntity.userProfileUrl, 
       createdAt: commentEntity.createdAt, 
       likes: const [], 
-      totalReplies: commentEntity.totalReplies
+      totalReplies: commentEntity.totalReplies,
+      totalLikes: commentEntity.totalLikes,
     ).toJson();
 
     try{
@@ -428,13 +430,16 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
     final commentDocRef = await commentCollection.doc(commentEntity.commentId).get();
     if(commentDocRef.exists){
       List likes = commentDocRef.get('likes');
+      final totalLikes = commentDocRef.get('totalLikes');
       if(likes.contains(currentUid)){
         commentCollection.doc(commentEntity.commentId).update({
-          'likes': FieldValue.arrayRemove([currentUid])
+          'likes': FieldValue.arrayRemove([currentUid]),
+          'totalLikes': totalLikes - 1
         });
       }else{
         commentCollection.doc(commentEntity.commentId).update({
-          'likes': FieldValue.arrayUnion([currentUid])
+          'likes': FieldValue.arrayUnion([currentUid]),
+          'totalLikes': totalLikes + 1
         });
       }
     }

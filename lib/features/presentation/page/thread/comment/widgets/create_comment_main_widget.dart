@@ -286,7 +286,8 @@ class _CreateCommentMainWidgetState extends State<CreateCommentMainWidget> {
         userProfileUrl: user.profileUrl, 
         createdAt: Timestamp.now(), 
         likes: const [], 
-        totalReplies: 0
+        totalReplies: 0,
+        totalLikes: 0,
       )
     ).then((value) {
       setState(() {

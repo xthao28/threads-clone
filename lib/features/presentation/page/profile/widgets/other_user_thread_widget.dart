@@ -7,7 +7,7 @@ import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.da
 import '../../../../../consts.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
-import '../../home/widget/single_card_thread_widget.dart';
+import '../../thread/widgets/single_card_thread_widget.dart';
 
 class OtherUserThreadWidget extends StatefulWidget {
   final UserEntity otherUser;
