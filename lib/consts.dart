@@ -16,6 +16,7 @@ class FirebaseConst{
   static const String replies = 'replies';
 }
 
+
 class PageConst{
   static const String settingPage = 'setting-page';  
 }
@@ -70,6 +71,16 @@ Widget circleAvatar(double radius, String url) {
     radius: radius,
   );
 }
+
+Widget iconFile(String nameFile){
+    return Padding(
+      padding: const EdgeInsets.only(right: 18),
+      child: Image.asset(
+        'assets/images/$nameFile.png',
+        width: 22.5,
+      ),
+    );
+  }
 
 String formatTimestamp(Timestamp timestamp) {
   final now = DateTime.now();

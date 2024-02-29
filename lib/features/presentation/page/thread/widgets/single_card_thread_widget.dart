@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/consts.dart';
+import 'package:threads_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:threads_clone/features/presentation/page/thread/comment/create_c
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/single_user_profile_page.dart';
 import 'package:threads_clone/features/presentation/page/thread/comment/comment_page.dart';
+import 'package:threads_clone/features/presentation/page/thread/widgets/like_animation_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
 class SingleCardThreadWidget extends StatefulWidget {
@@ -181,15 +183,14 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               child: Row(
                                 children: [
-                                  GestureDetector(
-                                    onTap: _likeThread,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(right: 18),
-                                      child: Image.asset(
-                                        'assets/images/${widget.thread.likes!.contains(_currentUid) ? 'heart-red' : 'like'}.png',
-                                        width: 22.5,
-                                      ),
-                                    ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 18),
+                                    child: LikeAnimationWidget(
+                                      isLike: widget.thread.likes!.contains(_currentUid), 
+                                      thread: widget.thread,
+                                      comment: const CommentEntity(),
+                                      isThread: true,
+                                    )
                                   ),
                                   InkWell(
                                     onTap: _createComment,
@@ -211,7 +212,7 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                               children: [
                                 InkWell(
                                   onTap: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CommentPage(thread: widget.thread,)));
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CommentPage(thread: widget.thread, currentUid: _currentUid,)));
                                   },
                                   child: Text(
                                     '${widget.thread.totalComments} replies',
@@ -235,7 +236,7 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                                     fontSize: 16,
                                     color: grey
                                   ),
-                                )
+                                ),                                
                               ],
                             )
                           ],
@@ -249,22 +250,14 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
     );
   }
 
-  Widget iconFile(String nameFile){
-    return Padding(
-      padding: const EdgeInsets.only(right: 18),
-      child: Image.asset(
-        'assets/images/$nameFile.png',
-        width: 22.5,
-      ),
-    );
-  }
-  _likeThread(){
-    BlocProvider.of<ThreadCubit>(context).likeThread(
-      thread: ThreadEntity(
-        threadId: widget.thread.threadId
-      )
-    );    
-  }
+  
+  // _likeThread(){
+  //   BlocProvider.of<ThreadCubit>(context).likeThread(
+  //     thread: ThreadEntity(
+  //       threadId: widget.thread.threadId
+  //     )
+  //   );    
+  // }
 
   _createComment(){
     return showModalBottomSheet(

@@ -11,17 +11,19 @@ class CommentEntity extends Equatable{
   final Timestamp? createdAt;
   final List<String>? likes;
   final num? totalReplies;
+  final num? totalLikes;
   
   const CommentEntity({
-    required this.commentId,
-    required this.threadId,
-    required this.creatorUid,
-    required this.description,
-    required this.username,
-    required this.userProfileUrl,
-    required this.createdAt,
-    required this.likes,
-    required this.totalReplies
+    this.commentId,
+    this.threadId,
+    this.creatorUid,
+    this.description,
+    this.username,
+    this.userProfileUrl,
+    this.createdAt,
+    this.likes,
+    this.totalReplies,
+    this.totalLikes,
   });
 
   @override
@@ -34,7 +36,8 @@ class CommentEntity extends Equatable{
     userProfileUrl,
     createdAt,
     likes,
-    totalReplies
+    totalReplies,
+    totalLikes,
   ];
 
   
