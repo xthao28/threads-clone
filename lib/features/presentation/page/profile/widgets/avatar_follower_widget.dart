@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 
-import '../../../../../consts.dart';
+import '../../../../../utils/widgets.dart';
 import '../../../cubit/user/get_followers/get_followers_cubit.dart';
 
 class AvatarFollowerWidget extends StatefulWidget {

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_other_single_user/get_other_single_user_cubit.dart';
@@ -9,6 +8,9 @@ import 'package:threads_clone/features/presentation/cubit/user/user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/avatar_follower_widget.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/other_user_thread_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
+
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 
 
 
@@ -80,25 +82,11 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                                 child: Column(     
                                   crossAxisAlignment: CrossAxisAlignment.start,           
                                   children: [
-                                    Text(
-                                      singleUser.name!,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 24,
-                                        color: Colors.black
-                                      ),
-                                    ),
+                                    text(singleUser.name!, 24.0, FontWeight.bold, black),                                    
                                     sizeVer(6),
                                     Row(                            
                                       children: [
-                                        Text(
-                                          singleUser.username!,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500
-                                          ),
-                                        ),
+                                        text(singleUser.username!, 14.0, FontWeight.w500, black),
                                         sizeHor(10),
                                         InkWell(
                                           onTap: (){},
@@ -111,26 +99,13 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                                               borderRadius: BorderRadius.circular(48),
                                               color: lightGreyColor
                                             ),                        
-                                            child: const Text(
-                                              'threads.net',
-                                              style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 12
-                                              ),
-                                            ),
+                                            child: text('threads.net', 12.0, FontWeight.normal, grey)                                            
                                           ),
                                         ),                  
                                       ],
                                     ),
                                     sizeVer(6),
-                                    Text(
-                                      singleUser.bio!,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500
-                                      ),
-                                    )
+                                    text(singleUser.bio!, 14.0, FontWeight.w500, black)                                    
                                   ],
                                 ),
                               ),
@@ -143,13 +118,12 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                               children: [
                                 AvatarFollowerWidget(currentUser: singleUser),
                                 sizeHor(6),
-                                Text(
-                                  '${singleUser.totalFollowers} followers - linktr.ee/xuanthao_28',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey
-                                  ),
-                                ),                                
+                                text(
+                                  '${singleUser.totalFollowers} followers - linktr.ee/${singleUser.link}', 
+                                  14.0, 
+                                  FontWeight.normal, 
+                                  grey
+                                )                                                               
                               ]
                             ),
                           ),
@@ -179,14 +153,12 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                                 ),  
                               ),
                               child: Center(
-                                child: Text(
+                                child: text(
                                   singleUser.followers!.contains(_currentUid) ? 'Following': 'Follow', 
-                                  style: TextStyle(
-                                    color: singleUser.followers!.contains(_currentUid) ? Colors.black : Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16
-                                  ),
-                                ),
+                                  16.0, 
+                                  FontWeight.w600, 
+                                  singleUser.followers!.contains(_currentUid) ? black : white
+                                )                                
                               ),             
                             ),
                           ),
@@ -223,24 +195,8 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                               controller: tabController,
                               children: [
                                 OtherUserThreadWidget(otherUser: singleUser),
-                                const Center(
-                                  child: Text(
-                                    "No replies yet",
-                                    style: TextStyle(
-                                      color: grey,
-                                      fontSize: 14
-                                    ),
-                                  )
-                                ),
-                                const Center(
-                                  child: Text(
-                                    "No replies yet",
-                                    style: TextStyle(
-                                      color: grey,
-                                      fontSize: 14
-                                    ),
-                                  )
-                                )
+                                customMessage("No replies yet"),
+                                customMessage("No reposts yet"),                                
                               ]
                             ),
                           ),                
@@ -255,14 +211,5 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
           return Center(child: circularIndicatorThreads());
         }
       );
-  }
-  Widget labelTab(String text){
-    return Text(
-      text,
-      style: const TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 16
-      ),
-    );
-  }
+  }  
 }

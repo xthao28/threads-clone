@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/single_user_profile_page.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 import '../../../../domain/usecases/user/get_current_uid_usecase.dart';
 import '../../../cubit/user/user_cubit.dart';
 
@@ -71,21 +72,9 @@ class _SingleCardUserWidgetState extends State<SingleCardUserWidget> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            widget.currentUser.username!,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600
-                            ),
-                          ),
+                          text(widget.currentUser.username!, 16.0, FontWeight.w600, textColorNormal),                          
                           sizeVer(3),
-                          Text(
-                            widget.currentUser.name!,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              color: grey
-                            ),
-                          ),
+                          text(widget.currentUser.name!, 14.0, FontWeight.normal, grey),                          
                           sizeVer(10),
                           Text(
                             widget.currentUser.username!
@@ -121,14 +110,12 @@ class _SingleCardUserWidgetState extends State<SingleCardUserWidget> {
                                 ),  
                               ),
                               child: Center(
-                                child: Text(
+                                child: text(
                                   widget.currentUser.followers!.contains(_currentUid) ? 'Following' : 'Follow', 
-                                  style: TextStyle(
-                                    color: widget.currentUser.followers!.contains(_currentUid) ? Colors.grey.shade400 : Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 16
-                                  ),
-                                ),
+                                  16.0, 
+                                  FontWeight.w600, 
+                                  widget.currentUser.followers!.contains(_currentUid) ? borderColor :black
+                                )                                
                               ),             
                             ),
                           ),

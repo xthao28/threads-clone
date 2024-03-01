@@ -2,13 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
+import 'package:threads_clone/utils/consts.dart';
 import 'package:threads_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/comment/comment_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../../../../utils/colors.dart';
+import '../../../../../../utils/widgets.dart';
 
 class CreateCommentMainWidget extends StatefulWidget {
   final ThreadEntity thread;
@@ -44,230 +47,191 @@ class _CreateCommentMainWidgetState extends State<CreateCommentMainWidget> {
       builder: (context, userState){
         if(userState is GetSingleUserLoaded){
           final currentUser = userState.user;
-          return Container(
-            child: Column(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: lightGreyColor
-                      )
+          return Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: lightGreyColor
                     )
+                  )
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 5
                   ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        child: text('Cancel', 16.0, FontWeight.normal, black)                           
+                      ),
+                      text('Reply', 16.0, FontWeight.bold, textColorNormal),                        
+                      InkWell(
+                        onTap:() => createComment(user: currentUser), 
+                        child: text('Post', 16.0, FontWeight.w600, Colors.blue)                          
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 8),
+                height: checkKeyBoard == 0 ? height*0.8 : height*0.45,
+                child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 5
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
                       children: [
-                        TextButton(
-                          onPressed: (){
-                            Navigator.pop(context);
-                          },
-                          child: const Text(
-                            'Cancel',            
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black
-                            ),              
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,                
+                                children: [
+                                  CircleAvatar(
+                                    radius: 19,
+                                    backgroundColor: grey,
+                                    backgroundImage: NetworkImage(widget.thread.userProfileUrl!),
+                                  ),
+                                  sizeVer(6),
+                                  const Expanded(
+                                    child: VerticalDivider(
+                                      width: 1,
+                                      thickness: 2,
+                                      color: lightGreyColor,
+                                    ),
+                                  ),
+                                  sizeVer(6),                                  
+                                ],
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Column( 
+                                    crossAxisAlignment: CrossAxisAlignment.start,                                   
+                                    children: [
+                                      Row(  
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,                    
+                                        children: [
+                                          text(widget.thread.username!, 16.0, FontWeight.bold, textColorNormal),                                                                             
+                                          Row(                          
+                                            children: [
+                                              Text(
+                                                formatTimestamp(widget.thread.createdAt!),                              
+                                                style: const TextStyle(
+                                                  color: grey,
+                                                ),
+                                              ),
+                                              sizeHor(5),                                      
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 6),
+                                        child: Text(                        
+                                          widget.thread.description!,                                                    
+                                          overflow: TextOverflow.clip,                          
+                                          style: const TextStyle(
+                                            fontSize: 16,                            
+                                          ),                        
+                                        ),
+                                      ), 
+                                      widget.thread.threadImageUrl != '' ? 
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                          top: 6,
+                                          bottom: 15
+                                        ),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(8),                        
+                                          child: CachedNetworkImage(
+                                            imageUrl: widget.thread.threadImageUrl!,
+                                            placeholder: (context, url) => Container(
+                                              padding: const EdgeInsets.symmetric(vertical: 6),                              
+                                              width: double.maxFinite, 
+                                              height: 200,                         
+                                              decoration: BoxDecoration(
+                                                color: lightGreyColor,
+                                                borderRadius: BorderRadius.circular(8)
+                                              ),
+                                            ),                            
+                                          )
+                                        ),
+                                      ) : 
+                                      Container(),                                                                      
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        const Text(
-                          'Reply',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
+                        IntrinsicHeight(
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,                
+                                children: [
+                                  CircleAvatar(
+                                    radius: 19,
+                                    backgroundColor: grey,
+                                    backgroundImage: NetworkImage(currentUser.profileUrl!),
+                                  ),
+                                  sizeVer(6),
+                                  const Expanded(
+                                    child: VerticalDivider(
+                                      width: 1,
+                                      thickness: 2,
+                                      color: lightGreyColor,
+                                    ),
+                                  ),
+                                  sizeVer(6),
+                                  CircleAvatar(
+                                    radius: 10,
+                                    backgroundColor: grey,
+                                    backgroundImage: NetworkImage(currentUser.profileUrl!),
+                                  ),                                  
+                                ],
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Column( 
+                                    crossAxisAlignment: CrossAxisAlignment.start,                                   
+                                    children: [
+                                      text(currentUser.username!, 16.0, FontWeight.bold, textColorNormal),                                        
+                                      TextFormField(                                                                         
+                                        controller: _descriptionController,                                                                                                    
+                                        keyboardType: TextInputType.multiline, 
+                                        maxLines: null,                                                                  
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          hintText: 'Reply to ${widget.thread.username!}...',
+                                          border: InputBorder.none
+                                        ),  
+                                      ),
+                                      sizeVer(10),
+                                      text('Add another reply', 14.0, FontWeight.normal, grey)                                                                                                                                       
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        InkWell(
-                          onTap:() => createComment(user: currentUser), 
-                          child: const Text(
-                            'Post',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue
-                            ),
-                          )
-                        )
                       ],
                     ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 8),
-                  height: checkKeyBoard == 0 ? height*0.8 : height*0.45,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          IntrinsicHeight(
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,                
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 19,
-                                      backgroundColor: grey,
-                                      backgroundImage: NetworkImage(widget.thread.userProfileUrl!),
-                                    ),
-                                    sizeVer(6),
-                                    const Expanded(
-                                      child: VerticalDivider(
-                                        width: 1,
-                                        thickness: 2,
-                                        color: lightGreyColor,
-                                      ),
-                                    ),
-                                    sizeVer(6),                                  
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Column( 
-                                      crossAxisAlignment: CrossAxisAlignment.start,                                   
-                                      children: [
-                                        Row(  
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,                    
-                                          children: [
-                                            Text(
-                                              widget.thread.username!,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16
-                                              ),
-                                            ),                                  
-                                              Row(                          
-                                              children: [
-                                                Text(
-                                                  formatTimestamp(widget.thread.createdAt!),                              
-                                                  style: const TextStyle(
-                                                    color: grey,
-                                                  ),
-                                                ),
-                                                sizeHor(5),                                      
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 6),
-                                          child: Text(                        
-                                            widget.thread.description!,                                                    
-                                            overflow: TextOverflow.clip,                          
-                                            style: const TextStyle(
-                                              fontSize: 16,                            
-                                            ),                        
-                                          ),
-                                        ), 
-                                        widget.thread.threadImageUrl != '' ? 
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                            top: 6,
-                                            bottom: 15
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(8),                        
-                                            child: CachedNetworkImage(
-                                              imageUrl: widget.thread.threadImageUrl!,
-                                              placeholder: (context, url) => Container(
-                                                padding: const EdgeInsets.symmetric(vertical: 6),                              
-                                                width: double.maxFinite, 
-                                                height: 200,                         
-                                                decoration: BoxDecoration(
-                                                  color: lightGreyColor,
-                                                  borderRadius: BorderRadius.circular(8)
-                                                ),
-                                              ),                            
-                                            )
-                                          ),
-                                        ) : 
-                                        Container(),                                                                      
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          IntrinsicHeight(
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,                
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 19,
-                                      backgroundColor: grey,
-                                      backgroundImage: NetworkImage(currentUser.profileUrl!),
-                                    ),
-                                    sizeVer(6),
-                                    const Expanded(
-                                      child: VerticalDivider(
-                                        width: 1,
-                                        thickness: 2,
-                                        color: lightGreyColor,
-                                      ),
-                                    ),
-                                    sizeVer(6),
-                                    CircleAvatar(
-                                      radius: 10,
-                                      backgroundColor: grey,
-                                      backgroundImage: NetworkImage(currentUser.profileUrl!),
-                                    ),                                  
-                                  ],
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: Column( 
-                                      crossAxisAlignment: CrossAxisAlignment.start,                                   
-                                      children: [
-                                        Text(
-                                          currentUser.username!,
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16
-                                          ),
-                                        ),  
-                                        TextFormField(                                                                         
-                                          controller: _descriptionController,                                                                                                    
-                                          keyboardType: TextInputType.multiline, 
-                                          maxLines: null,                                                                  
-                                          autofocus: true,
-                                          decoration: InputDecoration(
-                                            hintText: 'Reply to ${widget.thread.username!}...',
-                                            border: InputBorder.none
-                                          ),  
-                                        ),
-                                        sizeVer(10),
-                                        const Text(
-                                          'Add another reply',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: grey
-                                          ),
-                                        )                                                                                                   
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           );
         }
         return Center(child: circularIndicatorThreads(),);

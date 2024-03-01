@@ -18,7 +18,10 @@ class CreateComment extends StatelessWidget {
         BlocProvider(create: (_) => di.sl<CommentCubit>()),
         BlocProvider(create: (_) => di.sl<GetSingleUserCubit>())
       ], 
-      child: CreateCommentMainWidget(thread: thread, currentUid: currentUid,)
+      child: FractionallySizedBox(
+        heightFactor: 0.9,
+        child: CreateCommentMainWidget(thread: thread, currentUid: currentUid,)
+      )
     );
   }
 }

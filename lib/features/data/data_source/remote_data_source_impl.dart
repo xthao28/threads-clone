@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:threads_clone/consts.dart';
+import 'package:threads_clone/utils/consts.dart';
 import 'package:threads_clone/features/data/data_source/remote_data_source.dart';
 import 'package:threads_clone/features/data/models/comment/comment_model.dart';
 import 'package:threads_clone/features/data/models/reply/reply_model.dart';
@@ -16,6 +16,8 @@ import 'package:threads_clone/features/domain/entities/comment/comment_entity.da
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../../utils/widgets.dart';
 
 class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
 

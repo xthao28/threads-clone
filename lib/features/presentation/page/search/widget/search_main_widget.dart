@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/user/user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/search/widget/single_card_user_widget.dart';
+
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 
 class SearchMainWidget extends StatefulWidget {
   const SearchMainWidget({super.key});

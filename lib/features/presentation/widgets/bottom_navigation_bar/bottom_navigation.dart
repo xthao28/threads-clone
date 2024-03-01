@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/presentation/page/main_screen/main_screen.dart';
 
+import '../../../../utils/colors.dart';
 import 'tab_item.dart';
 
 class BottomNavigation extends StatelessWidget {

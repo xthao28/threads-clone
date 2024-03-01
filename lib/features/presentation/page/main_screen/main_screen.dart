@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/activity/activity_page.dart';
 import 'package:threads_clone/features/presentation/page/home/home_page.dart';
@@ -9,6 +8,7 @@ import 'package:threads_clone/features/presentation/page/search/search_page.dart
 import 'package:threads_clone/features/presentation/page/thread/thread_page.dart';
 import 'package:threads_clone/features/presentation/widgets/bottom_navigation_bar/bottom_navigation.dart';
 
+import '../../../../utils/widgets.dart';
 import '../../widgets/bottom_navigation_bar/tab_item.dart';
 import '../../widgets/create_thread_widget.dart';
 import '../profile/profile_page.dart';
@@ -85,16 +85,7 @@ class MainScreenState extends State<MainScreen> {
               // update the state
               // in order to repaint               
               if(index == 2) {
-                showModalBottomSheet(  
-                  isScrollControlled: true,                        
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  context: context, 
-                  builder: (BuildContext context){
-                    return CreateThreadWidget(currentUser: currentUser,);
-                  }
-                );
+                showMyModalBottomSheet(context, CreateThreadWidget(currentUser: currentUser,));                
               } else{ 
                 setState(() {
                   currentIndex = index;                

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 import '../../../cubit/user/user_cubit.dart';
 
 class SingleCardUserFollowWidget extends StatefulWidget {
@@ -46,21 +47,9 @@ class _SingleCardUserFollowWidgetState extends State<SingleCardUserFollowWidget>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${widget.otherUser.username}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold
-                        ),
-                      ),
+                      text('${widget.otherUser.username}', 16.0, FontWeight.bold, textColorNormal),                      
                       sizeVer(3),
-                      const Text(
-                        'Followed you',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: grey
-                        ),
-                      )
+                      text('Followed you', 16.0, FontWeight.normal, grey)                      
                     ],
                   ),
                   Padding(
@@ -86,19 +75,17 @@ class _SingleCardUserFollowWidgetState extends State<SingleCardUserFollowWidget>
                           borderRadius: BorderRadius.circular(8),
                           color:  Colors.white10,
                           border: Border.all(
-                            color: Colors.grey.shade400,
+                            color: borderColor,
                             width: 1
                           ),  
                         ),
                         child: Center(
-                          child: Text(
+                          child: text(
                             widget.otherUser.followers!.contains(widget.currentUser.uid) ? 'Following' : 'Follow', 
-                            style: TextStyle(
-                              color: widget.otherUser.followers!.contains(widget.currentUser.uid) ? Colors.grey.shade400 : Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16
-                            ),
-                          ),
+                            16.0, 
+                            FontWeight.w600, 
+                            widget.otherUser.followers!.contains(widget.currentUser.uid) ? borderColor : black,
+                          )                           
                         ),             
                       ),
                     ),

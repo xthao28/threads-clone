@@ -1,12 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_followers/get_followers_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_single_user/get_single_user_cubit.dart';
 import 'package:threads_clone/features/presentation/page/activity/widgets/activity_main_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
+import '../../../../utils/widgets.dart';
 import '../../cubit/user/get_following/get_following_cubit.dart';
 
 class ActivityPage extends StatefulWidget {  

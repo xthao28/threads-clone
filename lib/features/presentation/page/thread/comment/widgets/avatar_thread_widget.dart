@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 
-import '../../../../../../consts.dart';
+import '../../../../../../utils/colors.dart';
+import '../../../../../../utils/widgets.dart';
 import '../../../../cubit/comment/comment_cubit.dart';
 
 class AvatarThreadWidget extends StatefulWidget {

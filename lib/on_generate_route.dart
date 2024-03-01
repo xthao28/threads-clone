@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:threads_clone/consts.dart';
+import 'package:threads_clone/utils/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/page/setting/setting_page.dart';
 

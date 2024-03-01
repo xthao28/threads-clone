@@ -6,8 +6,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/domain/usecases/storage/upload_image_to_storage_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/user/user_cubit.dart';
-import '../../../../../consts.dart';
+import '../../../../../utils/colors.dart';
 import 'package:threads_clone/injection_container.dart' as di;
+
+import '../../../../../utils/widgets.dart';
 
 
 class EditProfile extends StatefulWidget {
@@ -72,8 +74,8 @@ class _EditProfileState extends State<EditProfile> {
         ),
       );
     }
-    double checkKeyBoard = MediaQuery.of(context).viewInsets.bottom;
-    double width = MediaQuery.of(context).size.width;
+    // double checkKeyBoard = MediaQuery.of(context).viewInsets.bottom;
+    // double width = MediaQuery.of(context).size.width;
     String? imageUser = widget.currentUser.profileUrl;
     return FractionallySizedBox(
       heightFactor: 0.9,
@@ -88,31 +90,13 @@ class _EditProfileState extends State<EditProfile> {
                   onPressed: (){
                     Navigator.pop(context);
                   },
-                  child: const Text(                                            
-                    'Cancel',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black                                         
-                    ),
-                  ),
+                  child: text('Cancel', 16.0, FontWeight.normal, black)                  
                 ),
-                const Text(
-                  'Edit profile',                                        
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold
-                  ),
-                ),     
+                text('Edit profile', 16.0, FontWeight.bold, black),                   
                 _isUpdating == false ? 
                   TextButton(
                     onPressed: _submitData,
-                    child: const Text(                                            
-                      'Save',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.blue                                         
-                      ),
-                    ),
+                    child: text('Save', 16.0, FontWeight.normal, Colors.blue)                      
                   ) :
                   const CircularProgressIndicator()
               ],

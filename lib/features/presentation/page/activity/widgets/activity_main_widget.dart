@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/page/activity/widgets/followers_tab_widget.dart';
+
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 
 class ActivityMainWidget extends StatefulWidget {
   final UserEntity currentUser;
@@ -105,17 +107,6 @@ class _ActivityMainWidgetState extends State<ActivityMainWidget> with TickerProv
           ),
         )
       ),
-    );
-  }
-  Widget nothingToSeeHereYet(){
-    return const Center(
-      child: Text(
-        "Nothing to see here yet",
-        style: TextStyle(
-          color: grey,
-          fontSize: 14
-        ),
-      )
     );
   }
 }

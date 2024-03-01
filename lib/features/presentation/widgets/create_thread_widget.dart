@@ -11,7 +11,8 @@ import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.da
 import 'package:threads_clone/injection_container.dart' as di;
 import 'package:uuid/uuid.dart';
 
-import '../../../consts.dart';
+import '../../../utils/colors.dart';
+import '../../../utils/widgets.dart';
 
 class CreateThreadWidget extends StatefulWidget {
   final UserEntity currentUser;
@@ -67,24 +68,12 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const SizedBox(
+                      child: SizedBox(
                         width: 60,
-                        child: Text(                                            
-                          'Cancel',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black                                         
-                          ),                                            
-                        ),
+                        child: text('Cancel', 16.0, FontWeight.normal, black)
                       ),
                     ),
-                    const Text(
-                      'New thread',                                        
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),     
+                    text('New thread', 16.0, FontWeight.bold, textColorNormal),                         
                     sizeHor(70)
                   ],
                 ),
@@ -127,7 +116,7 @@ class _CreateThreadWidgetState extends State<CreateThreadWidget> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
+                                  children: [                                    
                                     Text(
                                       widget.currentUser.username!,
                                       style: const TextStyle(

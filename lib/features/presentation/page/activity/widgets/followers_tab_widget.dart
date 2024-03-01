@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/user/get_followers/get_followers_cubit.dart';
 import 'package:threads_clone/features/presentation/page/activity/widgets/single_card_user_follow_widget.dart';
+
+import '../../../../../utils/widgets.dart';
 
 class FollowersTabWidget extends StatefulWidget {
   final UserEntity currentUser;
@@ -46,17 +47,6 @@ class _FollowersTabWidgetState extends State<FollowersTabWidget> {
         }
         return Center(child: circularIndicatorThreads(),);
       }
-    );
-  }
-  Widget nothingToSeeHereYet(){
-    return const Center(
-      child: Text(
-        "Nothing to see here yet",
-        style: TextStyle(
-          color: grey,
-          fontSize: 14
-        ),
-      ),
     );
   }
 }

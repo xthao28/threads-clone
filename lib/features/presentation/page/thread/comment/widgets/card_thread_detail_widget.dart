@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
+import 'package:threads_clone/utils/consts.dart';
 import 'package:threads_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
@@ -10,6 +10,9 @@ import 'package:threads_clone/features/presentation/page/thread/comment/create_c
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/single_user_profile_page.dart';
 import 'package:threads_clone/features/presentation/page/thread/widgets/like_animation_widget.dart';
+
+import '../../../../../../utils/colors.dart';
+import '../../../../../../utils/widgets.dart';
 
 class CardThreadDetailwidget extends StatefulWidget {
   final ThreadEntity thread;
@@ -54,13 +57,7 @@ class _CardThreadDetailwidgetState extends State<CardThreadDetailwidget> {
                               )
                             );
                           },
-                          child: Text(
-                            widget.thread.username!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
-                            ),
-                          ),
+                          child: text(widget.thread.username!, 16.0, FontWeight.bold, textColorNormal)                          
                         ),
                       ],
                     ),
@@ -128,7 +125,10 @@ class _CardThreadDetailwidgetState extends State<CardThreadDetailwidget> {
                         )
                       ),
                       InkWell(
-                        onTap: _createComment,
+                        onTap:() => showMyModalBottomSheet(
+                          context, 
+                          CreateComment(thread: widget.thread, currentUid: widget.currentUid)
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.only(right: 18),
                           child: Image.asset(
@@ -145,28 +145,9 @@ class _CardThreadDetailwidgetState extends State<CardThreadDetailwidget> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      '${widget.thread.totalComments} replies',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: grey
-                      ),
-                    ),
-                    const Text(
-                      ' · ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: grey
-                      ),
-                    ),
-                    Text(
-                      '${widget.thread.totalLikes} likes',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: grey
-                      ),
-                    ),                    
+                    text('${widget.thread.totalComments} replies', 16, FontWeight.normal, grey),
+                    text(' · ', 20, FontWeight.bold, grey),                                     
+                    text('${widget.thread.totalLikes} likes', 16, FontWeight.normal, grey),                                         
                   ],
                 )
               ],
@@ -184,26 +165,7 @@ class _CardThreadDetailwidgetState extends State<CardThreadDetailwidget> {
   //     )
   //   );       
   // }
-
-  _createComment(){
-    return showModalBottomSheet(
-      useRootNavigator: true,
-      isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10)
-        )
-      ),
-      context: context, 
-      builder: (BuildContext context){
-        return FractionallySizedBox(
-          heightFactor: 0.9,
-          child: CreateComment(thread: widget.thread, currentUid: widget.currentUid),
-        );
-      }
-    );
-  }  
+  
 
   Future _showOption(){
     return showModalBottomSheet(

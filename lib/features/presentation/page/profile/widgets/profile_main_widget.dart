@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/avatar_follower_widget.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/edit_profile.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/my_threads_widget.dart';
 import 'package:threads_clone/features/presentation/page/setting/setting_page.dart';
+
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 
 
 
@@ -81,25 +83,11 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                         child: Column(     
                           crossAxisAlignment: CrossAxisAlignment.start,           
                           children: [
-                            Text(
-                              widget.currentUser.name!,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 24,
-                                color: Colors.black
-                              ),
-                            ),
+                            text(widget.currentUser.name!, 24.0, FontWeight.bold, black),                            
                             sizeVer(6),
                             Row(                            
                               children: [
-                                Text(
-                                  widget.currentUser.username!,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500
-                                  ),
-                                ),
+                                text(widget.currentUser.username!, 14.0, FontWeight.w500, black),                                
                                 sizeHor(10),
                                 InkWell(
                                   onTap: (){},
@@ -112,26 +100,18 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                                       borderRadius: BorderRadius.circular(48),
                                       color: lightGreyColor
                                     ),                        
-                                    child: const Text(
-                                      'threads.net',
-                                      style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 12
-                                      ),
-                                    ),
+                                    child: text('threads.net', 12.0, FontWeight.normal, grey),                                     
                                   ),
                                 ),                  
                               ],
                             ),
                             sizeVer(6),
-                            Text(
-                              widget.currentUser.bio!,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500
-                              ),
-                            )
+                            text(
+                              widget.currentUser.bio!, 
+                              14.0, 
+                              FontWeight.w500, 
+                              black
+                            )                            
                           ],
                         ),
                       ),
@@ -144,13 +124,12 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                       children: [
                         AvatarFollowerWidget(currentUser: widget.currentUser),
                         sizeHor(6),
-                        Text(
-                          '${widget.currentUser.totalFollowers} followers - linktr.ee/${widget.currentUser.link}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey
-                          ),
-                        ),                                
+                        text(
+                          '${widget.currentUser.totalFollowers} followers - linktr.ee/${widget.currentUser.link}', 
+                          14.0, 
+                          FontWeight.normal, 
+                          grey
+                        )                                                       
                       ]
                     ),
                   ),
@@ -158,21 +137,10 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       InkWell(
-                        onTap:(){
-                          showModalBottomSheet(  
-                            isScrollControlled: true,                        
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10),
-                                topRight: Radius.circular(10)
-                              )
-                            ),
-                            context: context, 
-                            builder: (BuildContext context){
-                              return EditProfile(currentUser: widget.currentUser);
-                            }
-                          );
-                        },
+                        onTap:() => showMyModalBottomSheet(
+                          context, 
+                          EditProfile(currentUser: widget.currentUser)
+                        ),
                         borderRadius: BorderRadius.circular(8),                            
                         child: Container(                                             
                           padding:const EdgeInsets.symmetric(
@@ -187,15 +155,8 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                               width: 1
                             ),  
                           ),
-                          child: const Center(
-                            child: Text(
-                              'Edit profile', 
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16
-                              ),
-                            ),
+                          child: Center(
+                            child: text('Edit profile', 16.0, FontWeight.w600, black)                            
                           ),             
                         ),
                       ), 
@@ -215,15 +176,8 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                               width: 1
                             ),  
                           ),
-                          child: const Center(
-                            child: Text(
-                              'Share profile', 
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 16
-                              ),
-                            ),
+                          child: Center(
+                            child: text('Share profile', 16.0, FontWeight.w600, black)                            
                           ),             
                         ),
                       ),                     
@@ -276,15 +230,7 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
       )
     );    
   }
-  Widget labelTab(String text){
-    return Text(
-      text,
-      style: const TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 16
-      ),
-    );
-  }
+ 
   Widget hamburger(){
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -309,16 +255,5 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
         )
       ],
     );
-  }
-  Widget customMessage(String message){
-    return Center(
-      child: Text(
-        message,
-        style: const TextStyle(
-          color: grey,
-          fontSize: 14
-        ),
-      )
-    );
-  }
+  }  
 }

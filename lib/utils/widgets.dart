@@ -3,23 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-const lightGreyColor = Color.fromRGBO(231, 232, 231, 1);
-const backgroundColor = Colors.white10;
-const grey = Colors.grey;
-
-class FirebaseConst{
-  static const String users = 'users';
-  static const String threads = 'threads';
-  static const String comments = 'comments';
-  static const String replies = 'replies';
-}
-
-
-class PageConst{
-  static const String settingPage = 'setting-page';  
-}
+import 'colors.dart';
 
 Widget sizeVer(double height){
   return SizedBox(height: height,);
@@ -42,6 +27,39 @@ Widget titlePage(String title){
         fontWeight: FontWeight.bold
       ),
     ),
+  );
+}
+
+Widget text(String text, double fontSize, FontWeight fontWeight, Color color ){
+  return Text(
+    text,
+    style: TextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      color: color
+    ),
+  );
+}
+
+Widget labelTab(String text){
+  return Text(
+    text,
+    style: const TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 16
+    ),
+  );
+}
+
+Widget customMessage(String message){
+  return Center(
+    child: Text(
+      message,
+      style: const TextStyle(
+        color: grey,
+        fontSize: 14
+      ),
+    )
   );
 }
 
@@ -73,40 +91,28 @@ Widget circleAvatar(double radius, String url) {
 }
 
 Widget iconFile(String nameFile){
-    return Padding(
-      padding: const EdgeInsets.only(right: 18),
-      child: Image.asset(
-        'assets/images/$nameFile.png',
-        width: 22.5,
-      ),
+  return Padding(
+    padding: const EdgeInsets.only(right: 18),
+    child: Image.asset(
+      'assets/images/$nameFile.png',
+      width: 22.5,
+    ),
+  );
+}
+
+Widget nothingToSeeHereYet(){
+    return const Center(
+      child: Text(
+        "Nothing to see here yet",
+        style: TextStyle(
+          color: grey,
+          fontSize: 14
+        ),
+      )
     );
   }
 
-String formatTimestamp(Timestamp timestamp) {
-  final now = DateTime.now();
-  final postTime = timestamp.toDate(); // The timestamp should be in seconds
-
-  final difference = now.difference(postTime);
-
-  if (difference.inDays > 0) {
-    if (difference.inDays >= 1 && difference.inDays < 2) {
-      return 'Yesterday';
-    } else {
-      return '${postTime.day}/${postTime.month}/${postTime.year}';
-    }
-  } else if (difference.inHours > 0) {
-    return '${difference.inHours}h';
-  } else if (difference.inMinutes > 0) {
-    return '${difference.inMinutes}m';
-  } else if (difference.inSeconds > 0) {
-    return '${difference.inSeconds}s';
-  } else {
-    return 'Just now';
-  }
-}
-
-
-void toast(String message, Color color){  
+  void toast(String message, Color color){  
   Fluttertoast.showToast(
     msg: message,
     toastLength: Toast.LENGTH_SHORT,
@@ -129,14 +135,19 @@ void customToast(BuildContext context){
   );
 }
 
-
-// Future<void> createThread(BuildContext context){
-//   return showModalBottomSheet(
-//     context: context, 
-//     builder: (BuildContext context){
-//       return Container(
-
-//       )
-//     }
-//   );
-// }
+Future showMyModalBottomSheet(BuildContext context, Widget childWidget){
+  return showModalBottomSheet(  
+    isScrollControlled: true,   
+    useRootNavigator: true,                     
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(10),
+        topRight: Radius.circular(10)
+      )
+    ),
+    context: context, 
+    builder: (BuildContext context){
+      return childWidget;
+    }
+  );
+}

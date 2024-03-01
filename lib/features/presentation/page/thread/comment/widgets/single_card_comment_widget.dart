@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 
-import '../../../../../../consts.dart';
+import '../../../../../../utils/colors.dart';
+import '../../../../../../utils/consts.dart';
+import '../../../../../../utils/widgets.dart';
 import '../../../../../domain/entities/comment/comment_entity.dart';
 import '../../../profile/profile_page.dart';
 import '../../../profile/single_user_profile_page.dart';
@@ -57,13 +59,7 @@ class _SingleCardCommentWidgetState extends State<SingleCardCommentWidget> {
                               )
                             );
                           },
-                          child: Text(
-                            widget.comment.username!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
-                            ),
-                          ),
+                          child: text(widget.comment.username!, 16.0, FontWeight.bold, textColorNormal)                          
                         ),
                         Row(                          
                           children: [
@@ -126,28 +122,9 @@ class _SingleCardCommentWidgetState extends State<SingleCardCommentWidget> {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          '${widget.comment.totalReplies} replies',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: grey
-                          ),
-                        ),
-                        const Text(
-                          ' · ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: grey
-                          ),
-                        ),
-                        Text(
-                          '${widget.comment.totalLikes} likes',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: grey
-                          ),
-                        )
+                        text('${widget.comment.totalReplies} replies', 16, FontWeight.normal, grey),
+                        text(' · ', 20, FontWeight.bold, grey),                                     
+                        text('${widget.comment.totalLikes} likes', 16, FontWeight.normal, grey),
                       ],
                     )
                   ],

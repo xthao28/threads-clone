@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/auth/auth_cubit.dart';
+
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 
 class SettingMainWidget extends StatelessWidget {
   final UserEntity currentUser;
@@ -57,26 +59,14 @@ class SettingMainWidget extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: (){}, 
-                  child: const Text(
-                    'Switch profiles',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.blue
-                    ),
-                  )
+                  child: text('Switch profiles', 16.0, FontWeight.normal, Colors.blue)                                    
                 ),
                 TextButton(
                   onPressed: (){
                     BlocProvider.of<AuthCubit>(context).loggedOut();
                     Navigator.pop(context);                                        
                   }, 
-                  child: const Text(
-                    'Log out',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.red
-                    ),
-                  )
+                  child: text('Log out', 16.0, FontWeight.normal, Colors.red)                  
                 ) 
               ]    
             ),
@@ -86,7 +76,7 @@ class SettingMainWidget extends StatelessWidget {
     );
   }
 
-  Widget settingButton(String text, IconData icon){
+  Widget settingButton(String title, IconData icon){
     return InkWell(
       onTap: (){},
       child: Padding(
@@ -98,13 +88,7 @@ class SettingMainWidget extends StatelessWidget {
               size: 28,
             ),
             sizeHor(12),
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500
-              ),
-            )
+            text(title, 16.0, FontWeight.w500, textColorNormal)            
           ],
         ),
       ),

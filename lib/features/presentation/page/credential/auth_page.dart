@@ -2,13 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/auth/auth_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/credential/credential_cubit.dart';
 import 'package:threads_clone/features/presentation/page/main_screen/main_screen.dart';
 import 'dart:io';
 
+import '../../../../utils/colors.dart';
+import '../../../../utils/widgets.dart';
 import 'widget/user_image_picker.dart';
 
 class AuthPage extends StatefulWidget {
@@ -83,22 +84,20 @@ class _AuthPageState extends State<AuthPage> {
               children: [   
               // sizeVer(120),         
                 Center(
-                  child: Text(
-                    !_isSignIn ? 'Sign Up' : 'Sign In',
-                    style: const TextStyle(
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold
-                    ),
-                  )
+                  child: text(
+                    !_isSignIn ? 'Sign Up' : 'Sign In', 
+                    26.0, 
+                    FontWeight.bold, 
+                    textColorNormal
+                  )                  
                 ),
                 Center(
-                  child: Text(
-                    !_isSignIn ? 'Customise your Threads profile' : 'Sign in to your Threads account',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Color.fromRGBO(153, 153, 153, 1)
-                    ),
-                  )
+                  child: text(
+                    !_isSignIn ? 'Customise your Threads profile' : 'Sign in to your Threads account', 
+                    12.0, 
+                    FontWeight.normal, 
+                    grey
+                  )                  
                 ),
                 sizeVer(100), 
                 Container(
@@ -230,14 +229,12 @@ class _AuthPageState extends State<AuthPage> {
                       // ),  
                     ), 
                     child: Center(
-                      child: Text(
+                      child: text(
                         !_isSignIn ? 'Sign Up' : 'Sign In', 
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14
-                        ),
-                      ),
+                        14.0, 
+                        FontWeight.bold, 
+                        white
+                      )                      
                     ),             
                   ),
                 ), 
@@ -260,14 +257,12 @@ class _AuthPageState extends State<AuthPage> {
                       ),  
                     ), 
                     child: Center(
-                      child: Text(
+                      child: text(
                         _isSignIn ? 'Create new account' : 'I already have an account', 
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14
-                        ),
-                      ),
+                        14.0, 
+                        FontWeight.bold, 
+                        black
+                      )                      
                     ),             
                   ),
                 ),           

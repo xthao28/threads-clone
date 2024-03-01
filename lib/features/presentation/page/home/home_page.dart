@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
 import 'package:threads_clone/features/presentation/page/thread/widgets/single_card_thread_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
-import '../../../../consts.dart';
+import '../../../../utils/colors.dart';
+import '../../../../utils/widgets.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,11 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -59,15 +55,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _notThreadsYetWidget(){
-    return const Center(
-      child: Text(
-        'No Threads Yet',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          color: Colors.black
-        ),
-      ),
+    return Center(
+      child: text(
+        'No Threads Yet', 
+        18.0, 
+        FontWeight.bold, 
+        black
+      )      
     );
   }
 }

@@ -4,7 +4,8 @@ import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
 import 'package:threads_clone/features/presentation/page/thread/widgets/single_card_thread_widget.dart';
 
-import '../../../../../consts.dart';
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 import '../../../widgets/create_thread_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
@@ -54,18 +55,10 @@ class _MyThreadsWidgetState extends State<MyThreadsWidget> {
   Widget _noThreadsYetWidget(BuildContext context){
     return Center(
       child: InkWell(
-        onTap: (){
-          showModalBottomSheet(  
-            isScrollControlled: true,                        
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10)
-            ),
-            context: context, 
-            builder: (BuildContext context){
-              return CreateThreadWidget(currentUser: widget.currentUser,);
-            }
-          );
-        },
+        onTap: () => showMyModalBottomSheet(
+          context, 
+          CreateThreadWidget(currentUser: widget.currentUser,)
+        ),
         child: Container(
           decoration: BoxDecoration(
             border: Border.all(
@@ -78,14 +71,12 @@ class _MyThreadsWidgetState extends State<MyThreadsWidget> {
             horizontal: 22,
             vertical: 7
           ),
-          child: const Text(
+          child: text(
             'Start your first thread', 
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 14
-            ),
-          ),
+            14.0, 
+            FontWeight.bold, 
+            black
+          )           
         ),
       )
     );

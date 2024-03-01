@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:threads_clone/consts.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_single_thread/read_single_thread_cubit.dart';
 import 'package:threads_clone/features/presentation/page/thread/comment/widgets/card_thread_detail_widget.dart';
 import 'package:threads_clone/features/presentation/page/thread/comment/widgets/single_card_comment_widget.dart';
 
+import '../../../../../utils/colors.dart';
+import '../../../../../utils/widgets.dart';
 import '../../../cubit/comment/comment_cubit.dart';
 
 class CommentPage extends StatefulWidget {
@@ -34,13 +35,7 @@ class _CommentPageState extends State<CommentPage> {
             appBar: AppBar(
               backgroundColor: backgroundColor,
               elevation: 0,
-              title: const Text(
-                'Thread',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16
-                ),
-              ),
+              title: text('Thread', 16.0, FontWeight.bold, textColorNormal)              
             ),
             body: SingleChildScrollView(
               child: Column(

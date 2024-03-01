@@ -2,7 +2,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:threads_clone/consts.dart';
+
+import '../../../../../utils/widgets.dart';
 class UserImagePicker extends StatefulWidget {
   final void Function(File pickedImage)imagePickFn;
   // ignore: prefer_const_constructors_in_immutables, use_key_in_widget_constructors

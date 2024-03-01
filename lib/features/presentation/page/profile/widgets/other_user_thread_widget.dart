@@ -4,9 +4,10 @@ import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
 
-import '../../../../../consts.dart';
+import '../../../../../utils/colors.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
+import '../../../../../utils/widgets.dart';
 import '../../thread/widgets/single_card_thread_widget.dart';
 
 class OtherUserThreadWidget extends StatefulWidget {
@@ -67,14 +68,7 @@ class _OtherUserThreadWidgetState extends State<OtherUserThreadWidget> {
           horizontal: 22,
           vertical: 7
         ),
-        child: const Text(
-          'No threads yet', 
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 14
-          ),
-        ),
+        child: text('No threads yet', 14.0, FontWeight.bold, black)        
       )
     );
   }
