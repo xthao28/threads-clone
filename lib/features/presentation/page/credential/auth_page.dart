@@ -136,7 +136,7 @@ class _AuthPageState extends State<AuthPage> {
                                         controller: _emailController,
                                         validator: (value) {
                                           if(value!.isEmpty || !value.contains("@")){
-                                            return 'Please enter a valid email address.';
+                                            toast('Please enter a valid email address.', Colors.red);
                                           }
                                           return null;
                                         },                        
@@ -162,7 +162,7 @@ class _AuthPageState extends State<AuthPage> {
                                 controller: _usernameController,
                                 validator: (value) {
                                   if(value!.isEmpty || value.length < 4){
-                                    return 'Please enter at least 4 characters.';
+                                    toast('Please enter at least 4 characters.', Colors.red);                                    
                                   }
                                   return null;
                                 },
@@ -179,7 +179,7 @@ class _AuthPageState extends State<AuthPage> {
                               controller: _passwordController,
                               validator: (value) {
                                 if(value!.isEmpty || value.length < 7){
-                                  return 'Password must be at least 7 characters long.';
+                                  toast('Password must be at least 7 characters long.', Colors.red);                                  
                                 }
                                 return null;
                               },
@@ -195,7 +195,7 @@ class _AuthPageState extends State<AuthPage> {
                               controller: _bioController,
                               validator: (value) {
                                 if(value!.isEmpty || value.length < 4){
-                                  return 'Please enter at least 4 characters.';                      
+                                  toast( 'Please enter at least 4 characters.', Colors.red);                                                       
                                 }
                                 return null;                    
                               },
@@ -326,9 +326,9 @@ class _AuthPageState extends State<AuthPage> {
         _bioController.clear();
         _emailController.clear();
         _passwordController.clear();
-        _usernameController.clear();
+        _usernameController.clear();        
       });
-    });
+    });    
   }
 
   void _signInPage(){

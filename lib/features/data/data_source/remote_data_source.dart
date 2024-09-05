@@ -32,12 +32,14 @@ abstract class FirebaseRemoteDataSource{
   Stream<List<ThreadEntity>> readThreads(ThreadEntity threadEntity);
   Stream<List<ThreadEntity>> readSingleThread(String threadId);
   Stream<List<ThreadEntity>> readMyThreads(String currentUid);
+  Stream<List<UserEntity>> getLikes(List<dynamic> listLikes);
 
   //Comment
   Future<void> createComment(CommentEntity commentEntity);
   Future<void> deleteComment(CommentEntity commentEntity);
   Future<void> likeComment(CommentEntity commentEntity);
   Stream<List<CommentEntity>> readComments(String threadId);
+  // Stream<List<CommentEntity>> readSingleComment(String threadId, String commentId);
 
   //Reply
   Future<void> createReply(ReplyEntity replyEntity);

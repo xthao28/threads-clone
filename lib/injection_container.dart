@@ -9,6 +9,7 @@ import 'package:threads_clone/features/domain/usecases/comment/read_comments_use
 import 'package:threads_clone/features/domain/usecases/storage/upload_image_to_storage_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/create_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/delete_thread_usecase.dart';
+import 'package:threads_clone/features/domain/usecases/thread/get_likes_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/like_thread_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/read_my_threads_usecase.dart';
 import 'package:threads_clone/features/domain/usecases/thread/read_single_thread_usecase.dart';
@@ -23,6 +24,7 @@ import 'package:threads_clone/features/domain/usecases/user/get_users_usecase.da
 import 'package:threads_clone/features/domain/usecases/user/update_user_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/comment/comment_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/reply/reply_cubit.dart';
+import 'package:threads_clone/features/presentation/cubit/thread/get_likes/get_likes_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_my_threads/read_my_threads_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/read_single_thread/read_single_thread_cubit.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
@@ -117,6 +119,8 @@ Future<void> init() async{
     getSingleUserUseCase: sl.call()
   ));
 
+  sl.registerFactory(() => GetLikesCubit(getLikesUseCase: sl.call()));
+
 //User
 
   sl.registerLazySingleton(() => GetCurrentUidUseCase(firebaseRepository: sl.call()));
@@ -141,6 +145,7 @@ Future<void> init() async{
   sl.registerLazySingleton(() => ReadThreadsUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => UpdateThreadUseCase(firebaseRepository: sl.call()));
   sl.registerLazySingleton(() => ReadMyThreadsUseCase(firebaseRepository: sl.call()));
+  sl.registerLazySingleton(() => GetLikesUseCase(firebaseRepository: sl.call()));
 
 
 //Comment

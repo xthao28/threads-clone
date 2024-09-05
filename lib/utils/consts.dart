@@ -9,10 +9,6 @@ class FirebaseConst{
 }
 
 
-class PageConst{
-  static const String settingPage = 'setting-page';  
-}
-
 
 
 String formatTimestamp(Timestamp timestamp) {
@@ -38,15 +34,6 @@ String formatTimestamp(Timestamp timestamp) {
   }
 }
 
-
-
-// Future<void> createThread(BuildContext context){
-//   return showModalBottomSheet(
-//     context: context, 
-//     builder: (BuildContext context){
-//       return Container(
-
-//       )
-//     }
-//   );
+// class PageConst{
+//   static const String settingPage = 'setting-page';  
 // }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
+import 'package:threads_clone/features/presentation/page/thread/comment/widgets/like_comment_animation_widget.dart';
+
 
 import '../../../../../../utils/colors.dart';
 import '../../../../../../utils/consts.dart';
@@ -7,7 +8,7 @@ import '../../../../../../utils/widgets.dart';
 import '../../../../../domain/entities/comment/comment_entity.dart';
 import '../../../profile/profile_page.dart';
 import '../../../profile/single_user_profile_page.dart';
-import '../../widgets/like_animation_widget.dart';
+
 
 class SingleCardCommentWidget extends StatefulWidget {
   final CommentEntity comment;
@@ -97,11 +98,9 @@ class _SingleCardCommentWidgetState extends State<SingleCardCommentWidget> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(right: 18),
-                            child: LikeAnimationWidget(
-                              isLike: widget.comment.likes!.contains(widget.currentUid), 
-                              thread: const ThreadEntity(),
-                              comment: widget.comment,
-                              isThread: false,
+                            child: LikeCommentAnimationWidget(
+                              isLike: widget.comment.likes!.contains(widget.currentUid),                               
+                              comment: widget.comment, 
                             )
                           ),
                           InkWell(

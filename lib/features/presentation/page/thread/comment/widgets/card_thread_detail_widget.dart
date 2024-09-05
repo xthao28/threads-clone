@@ -3,16 +3,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/utils/consts.dart';
-import 'package:threads_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
 import 'package:threads_clone/features/presentation/page/thread/comment/create_comment.dart';
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/single_user_profile_page.dart';
-import 'package:threads_clone/features/presentation/page/thread/widgets/like_animation_widget.dart';
+import 'package:threads_clone/features/presentation/page/thread/widgets/like_thread_animation_widget.dart';
 
 import '../../../../../../utils/colors.dart';
 import '../../../../../../utils/widgets.dart';
+import '../../like/like_page.dart';
 
 class CardThreadDetailwidget extends StatefulWidget {
   final ThreadEntity thread;
@@ -117,11 +117,9 @@ class _CardThreadDetailwidgetState extends State<CardThreadDetailwidget> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 18),
-                        child: LikeAnimationWidget(
+                        child: LikeThreadAnimationWidget(
                           isLike: widget.thread.likes!.contains(widget.currentUid), 
-                          thread: widget.thread,
-                          comment: const CommentEntity(),
-                          isThread: true,
+                          thread: widget.thread,                         
                         )
                       ),
                       InkWell(
@@ -145,9 +143,17 @@ class _CardThreadDetailwidgetState extends State<CardThreadDetailwidget> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    text('${widget.thread.totalComments} replies', 16, FontWeight.normal, grey),
-                    text(' · ', 20, FontWeight.bold, grey),                                     
-                    text('${widget.thread.totalLikes} likes', 16, FontWeight.normal, grey),                                         
+                    if(widget.thread.totalComments! > 0)
+                      text('${widget.thread.totalComments} replies', 16.0, FontWeight.normal, grey),
+                    if(widget.thread.totalComments! > 0 && widget.thread.totalLikes! > 0)
+                      text(' · ', 20.0, FontWeight.bold, grey),                          
+                    if(widget.thread.totalLikes! > 0)
+                      InkWell(
+                        onTap: (){
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => LikePage(thread: widget.thread, currentUserUid: widget.currentUid,)));
+                        },
+                        child: text('${widget.thread.totalLikes} likes', 16.0, FontWeight.normal, grey)
+                      )
                   ],
                 )
               ],
@@ -157,15 +163,6 @@ class _CardThreadDetailwidgetState extends State<CardThreadDetailwidget> {
       ),
     );
   }
-
-  // _likeThread(){
-  //   BlocProvider.of<ThreadCubit>(context).likeThread(
-  //     thread: ThreadEntity(
-  //       threadId: widget.thread.threadId
-  //     )
-  //   );       
-  // }
-  
 
   Future _showOption(){
     return showModalBottomSheet(

@@ -80,8 +80,7 @@ class _CreateCommentMainWidgetState extends State<CreateCommentMainWidget> {
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.only(top: 8),
+              SizedBox(                
                 height: checkKeyBoard == 0 ? height*0.8 : height*0.45,
                 child: SingleChildScrollView(
                   child: Padding(

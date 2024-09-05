@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
-import 'package:threads_clone/features/presentation/cubit/user/get_followers/get_followers_cubit.dart';
+import 'package:threads_clone/features/presentation/cubit/user/get_following/get_following_cubit.dart';
 import 'package:threads_clone/features/presentation/page/activity/widgets/single_card_user_follow_widget.dart';
 
 import '../../../../../utils/widgets.dart';
 
-class FollowersTabWidget extends StatefulWidget {
+class FollowingTabWidget extends StatefulWidget {
   final UserEntity currentUser;
-  const FollowersTabWidget({super.key, required this.currentUser});
+  const FollowingTabWidget({super.key, required this.currentUser});
 
   @override
-  State<FollowersTabWidget> createState() => _FollowersTabWidgetState();
+  State<FollowingTabWidget> createState() => _FollowingTabWidgetState();
 }
 
-class _FollowersTabWidgetState extends State<FollowersTabWidget> {
+class _FollowingTabWidgetState extends State<FollowingTabWidget> {
   @override
   void initState() {
-    BlocProvider.of<GetFollowersCubit>(context).getFollowers(listFollowers: widget.currentUser.followers as List<dynamic>);
+    BlocProvider.of<GetFollowingCubit>(context).getFollowing(listFollowing: widget.currentUser.following as List<dynamic>);
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetFollowersCubit, GetFollowersState>(
+    return BlocBuilder<GetFollowingCubit, GetFollowingState>(
       builder: (context, userState){
-        // if(userState is GetFollowersFailure){
-        //   return nothingToSeeHereYet();
-        // }
-        if(userState is GetFollowersLoaded){
+        if(userState is GetFollowingLoaded){
           final userFollowers = userState.users;
           return userFollowers.isEmpty ?
           nothingToSeeHereYet() :
@@ -38,12 +35,12 @@ class _FollowersTabWidgetState extends State<FollowersTabWidget> {
               return SingleCardUserFollowWidget(
                 otherUser: userFollower,
                 currentUser: widget.currentUser,
-                isFollowers: true,
+                isFollowers: false,
               );
             },
           );
         }
-        return Center(child: circularIndicatorThreads(),);
+        return Center(child: circularIndicatorThreads(),);        
       }
     );
   }

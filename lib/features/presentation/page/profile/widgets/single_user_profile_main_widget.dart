@@ -11,6 +11,7 @@ import 'package:threads_clone/injection_container.dart' as di;
 
 import '../../../../../utils/colors.dart';
 import '../../../../../utils/widgets.dart';
+import 'follow_widget.dart';
 
 
 
@@ -118,12 +119,12 @@ class _SingleUserProfileMainWidgetState extends State<SingleUserProfileMainWidge
                               children: [
                                 AvatarFollowerWidget(currentUser: singleUser),
                                 sizeHor(6),
-                                text(
-                                  '${singleUser.totalFollowers} followers - linktr.ee/${singleUser.link}', 
-                                  14.0, 
-                                  FontWeight.normal, 
-                                  grey
-                                )                                                               
+                                InkWell(
+                                  onTap: () => showMyModalBottomSheet(context, FollowWidget(currentUser: singleUser,)),
+                                  child: text('${singleUser.totalFollowers} followers ', 14.0, FontWeight.normal, grey)
+                                ), 
+                                text("-", 14.0, FontWeight.normal, grey),
+                                text(" linktr.ee/${singleUser.link}", 14.0, FontWeight.normal, grey)                                                         
                               ]
                             ),
                           ),

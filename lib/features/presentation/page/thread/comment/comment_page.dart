@@ -35,7 +35,7 @@ class _CommentPageState extends State<CommentPage> {
             appBar: AppBar(
               backgroundColor: backgroundColor,
               elevation: 0,
-              title: text('Thread', 16.0, FontWeight.bold, textColorNormal)              
+              title: text('Thread', 18.0, FontWeight.bold, textColorNormal)              
             ),
             body: SingleChildScrollView(
               child: Column(

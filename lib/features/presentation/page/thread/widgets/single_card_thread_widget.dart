@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:threads_clone/features/presentation/page/thread/like/like_page.dart';
 import 'package:threads_clone/utils/consts.dart';
-import 'package:threads_clone/features/domain/entities/comment/comment_entity.dart';
 import 'package:threads_clone/features/domain/entities/thread/thread_entity.dart';
 import 'package:threads_clone/features/domain/usecases/user/get_current_uid_usecase.dart';
 import 'package:threads_clone/features/presentation/cubit/thread/thread_cubit.dart';
@@ -11,7 +11,7 @@ import 'package:threads_clone/features/presentation/page/thread/comment/create_c
 import 'package:threads_clone/features/presentation/page/profile/profile_page.dart';
 import 'package:threads_clone/features/presentation/page/profile/single_user_profile_page.dart';
 import 'package:threads_clone/features/presentation/page/thread/comment/comment_page.dart';
-import 'package:threads_clone/features/presentation/page/thread/widgets/like_animation_widget.dart';
+import 'package:threads_clone/features/presentation/page/thread/widgets/like_thread_animation_widget.dart';
 import 'package:threads_clone/injection_container.dart' as di;
 
 import '../../../../../utils/colors.dart';
@@ -75,10 +75,10 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                     ),
                   ),
                   sizeVer(6),
-                  SizedBox(
+                  const SizedBox(
                     width: 30,
                     child: Stack(
-                      children: const [
+                      children: [
                         Positioned(
                           child: CircleAvatar(
                             radius: 10,
@@ -182,11 +182,9 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(right: 18),
-                              child: LikeAnimationWidget(
+                              child: LikeThreadAnimationWidget(
                                 isLike: widget.thread.likes!.contains(_currentUid), 
-                                thread: widget.thread,
-                                comment: const CommentEntity(),
-                                isThread: true,
+                                thread: widget.thread,                               
                               )
                             ),
                             InkWell(
@@ -210,14 +208,22 @@ class _SingleCardThreadWidgetState extends State<SingleCardThreadWidget> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          InkWell(
-                            onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => CommentPage(thread: widget.thread, currentUid: _currentUid,)));
-                            },
-                            child: text('${widget.thread.totalComments} replies', 16.0, FontWeight.normal, grey)                             
-                          ),
-                          text(' · ', 20.0, FontWeight.bold, grey),                          
-                          text('${widget.thread.totalLikes} likes', 16.0, FontWeight.normal, grey)
+                          if(widget.thread.totalComments! > 0)
+                            InkWell(
+                              onTap: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CommentPage(thread: widget.thread, currentUid: _currentUid,)));
+                              },
+                              child: text('${widget.thread.totalComments} replies', 16.0, FontWeight.normal, grey)                             
+                            ),
+                          if(widget.thread.totalComments! > 0 && widget.thread.totalLikes! > 0)
+                            text(' · ', 20.0, FontWeight.bold, grey),                          
+                          if(widget.thread.totalLikes! > 0)
+                            InkWell(
+                              onTap: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => LikePage(thread: widget.thread, currentUserUid: _currentUid,)));
+                              },
+                              child: text('${widget.thread.totalLikes} likes', 16.0, FontWeight.normal, grey)
+                            )
                         ],
                       )
                     ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:threads_clone/features/domain/entities/user/user_entity.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/avatar_follower_widget.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/edit_profile.dart';
+import 'package:threads_clone/features/presentation/page/profile/widgets/follow_widget.dart';
 import 'package:threads_clone/features/presentation/page/profile/widgets/my_threads_widget.dart';
 import 'package:threads_clone/features/presentation/page/setting/setting_page.dart';
 
@@ -89,19 +90,16 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                               children: [
                                 text(widget.currentUser.username!, 14.0, FontWeight.w500, black),                                
                                 sizeHor(10),
-                                InkWell(
-                                  onTap: (){},
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 7
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(48),
-                                      color: lightGreyColor
-                                    ),                        
-                                    child: text('threads.net', 12.0, FontWeight.normal, grey),                                     
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 7
                                   ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(48),
+                                    color: lightGreyColor
+                                  ),                        
+                                  child: text('threads.net', 12.0, FontWeight.normal, grey),                                     
                                 ),                  
                               ],
                             ),
@@ -124,12 +122,12 @@ class _ProfileMainWidgetState extends State<ProfileMainWidget> with TickerProvid
                       children: [
                         AvatarFollowerWidget(currentUser: widget.currentUser),
                         sizeHor(6),
-                        text(
-                          '${widget.currentUser.totalFollowers} followers - linktr.ee/${widget.currentUser.link}', 
-                          14.0, 
-                          FontWeight.normal, 
-                          grey
-                        )                                                       
+                        InkWell(
+                          onTap: () => showMyModalBottomSheet(context, FollowWidget(currentUser: widget.currentUser,)),
+                          child: text('${widget.currentUser.totalFollowers} followers ', 14.0, FontWeight.normal, grey)
+                        ), 
+                        text("-", 14.0, FontWeight.normal, grey),
+                        text(" linktr.ee/${widget.currentUser.link}", 14.0, FontWeight.normal, grey)
                       ]
                     ),
                   ),

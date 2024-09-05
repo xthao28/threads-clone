@@ -86,6 +86,8 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
         toast('User not found', Colors.red);
       }else if(e.code == 'wrong-password'){
         toast('Invalid email or password', Colors.red);
+      }else{
+        toast('Something went wrong', Colors.red);
       }
     }
   }
@@ -361,6 +363,15 @@ class FirebaseRemoteDataSourceImpl implements FirebaseRemoteDataSource{
     if(threadEntity.threadImageUrl != '' || threadEntity.threadImageUrl != null) threadInfo['threadImageUrl'] = threadEntity.threadImageUrl!;
 
     threadCollection.doc(threadEntity.threadId).update(threadInfo);
+  }
+
+  @override
+  Stream<List<UserEntity>> getLikes(List<dynamic> listLikes){
+    if(listLikes.isEmpty){
+      return Stream.value([]);
+    }
+    final userCollection = firebaseFirestore.collection(FirebaseConst.users).where('uid', whereIn: listLikes);
+    return userCollection.snapshots().map((querySnapshot) => querySnapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList());
   }
 
 

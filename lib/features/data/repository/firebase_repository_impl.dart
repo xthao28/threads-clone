@@ -78,6 +78,9 @@ class FirebaseRepositoryImpl implements FirebaseRepository{
   @override
   Stream<List<ThreadEntity>> readMyThreads(String currentUid) => remoteDataSource.readMyThreads(currentUid);
 
+  @override
+  Stream<List<UserEntity>> getLikes(List<dynamic> listLikes) => remoteDataSource.getLikes(listLikes);
+
 
   //Comment
 

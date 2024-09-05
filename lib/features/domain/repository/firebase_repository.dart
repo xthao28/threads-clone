@@ -33,6 +33,7 @@ abstract class FirebaseRepository{
   Stream<List<ThreadEntity>> readThreads(ThreadEntity threadEntity);
   Stream<List<ThreadEntity>> readSingleThread(String threadId);
   Stream<List<ThreadEntity>> readMyThreads(String currentUid);  
+  Stream<List<UserEntity>> getLikes(List<dynamic> listLikes);
 
   //Comment
   Future<void> createComment(CommentEntity commentEntity);

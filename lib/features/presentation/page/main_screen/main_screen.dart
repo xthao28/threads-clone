@@ -33,7 +33,8 @@ class MainScreenState extends State<MainScreen> {
   static int currentIndex = 0;  
   @override
   void initState() {       
-    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);                  
+    BlocProvider.of<GetSingleUserCubit>(context).getSingleUser(uid: widget.uid);    
+    // BlocProvider.of<AuthCubit>(context).loggedOut();              
     super.initState();             
   }   
   final List<TabItem> tabs = [
